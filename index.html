@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Glossify | Car Detailing Infinity</title>
+<style>
+:root{--red:#ef252b;--ink:#111519;--muted:#6d737c;--line:#e4e7eb;--pale:#f5f6f8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:#15181d;background:#f6f7f8}
+header{height:72px;background:#101418;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 max(5vw,24px);gap:24px}
+.logo{display:flex;align-items:center;flex-shrink:0;background:transparent}.logo img{display:block;width:190px;height:92px;object-fit:contain;object-position:center;background:transparent;border-radius:0;mix-blend-mode:normal}
+nav{display:flex;gap:28px}nav a{color:#f4f4f4;text-decoration:none;font-size:14px;transition:color .2s ease, opacity .2s ease}nav a:hover,nav a:focus-visible{color:#ef252b;outline:none}html{scroll-behavior:smooth;scroll-padding-top:18px}.actions{display:flex;gap:10px;align-items:center}.mobile-auth{display:none}.menu-toggle{display:none;background:transparent;border:1px solid #62676d;color:white;border-radius:8px;width:42px;height:42px;font-size:23px;cursor:pointer;line-height:1}.btn{border:0;border-radius:8px;padding:12px 20px;font-weight:700;cursor:pointer}.btn-outline{background:transparent;color:#fff;border:1px solid #777}.btn-red{background:var(--red);color:#fff;box-shadow:0 7px 18px #ef252b30}.hero{min-height:420px;position:relative;isolation:isolate;overflow:hidden;background:#0c1115;color:white;display:flex;align-items:center;padding:52px max(6vw,24px)}
+.hero-slides{position:absolute;inset:0;z-index:-2}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.035);transition:opacity 900ms ease,transform 6s ease;background-color:#101418}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(8,12,15,.96) 0%,rgba(8,12,15,.83) 34%,rgba(8,12,15,.38) 67%,rgba(8,12,15,.48) 100%)}
+.hero-content{position:relative;z-index:2}
+.carousel-caption{position:absolute;right:max(6vw,24px);bottom:28px;z-index:3;color:white;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 2px 12px #000;display:flex;align-items:center;gap:10px}
+.carousel-caption .caption-line{width:28px;height:2px;background:var(--red)}
+.carousel-controls{position:absolute;right:max(6vw,24px);bottom:58px;z-index:3;display:flex;gap:8px}
+.carousel-arrow{width:38px;height:38px;border:1px solid #ffffff85;border-radius:50%;background:#10141899;color:white;font-size:21px;cursor:pointer}
+.carousel-dots{position:absolute;left:max(6vw,24px);bottom:28px;z-index:3;display:flex;gap:8px}
+.carousel-dot{width:8px;height:8px;border:0;border-radius:99px;padding:0;background:#ffffff80;cursor:pointer;transition:width .2s,background .2s}
+.carousel-dot.active{width:26px;background:var(--red)}
+@media(prefers-reduced-motion:reduce){.hero-slide{transition:none}}
+.hero-content{max-width:590px}.eyebrow{color:#ff777b;font-size:12px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}.hero h1{font-size:clamp(36px,4.4vw,58px);line-height:1.06;margin:12px 0 14px;letter-spacing:-1.5px}.hero h1 em{color:var(--red);font-style:normal}.hero p{color:#d5d8dc;font-size:17px;line-height:1.5;max-width:490px}.benefits{display:flex;flex-wrap:wrap;gap:18px;margin:24px 0;font-size:12px;color:#e6e8eb}.benefits span{display:flex;align-items:center;gap:7px}.benefits b{font-size:18px}
+main{max-width:1240px;margin:-28px auto 60px;position:relative;padding:0 20px}.booking-shell{background:white;border:1px solid #e8eaed;border-radius:16px;box-shadow:0 18px 50px #1014180c;padding:26px;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.85fr);gap:26px}.form-title{font-size:24px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin:0 0 20px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label,.section-label{display:block;font-size:13px;font-weight:750;margin-bottom:7px}.required{color:var(--red)}input,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:7px;font:inherit;font-size:14px;background:#fff;color:#242830;outline:none}input:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px #ef252b18}.section{margin-top:18px}.services{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.service{border:1px solid var(--line);border-radius:8px;min-height:92px;padding:12px 6px;text-align:center;cursor:pointer;background:#fff;transition:.18s}.service:hover{border-color:#f58c90}.service.selected{border:1.5px solid var(--red);background:#fff6f6;color:#d91e24}.service .ico{font-size:25px;display:block;margin-bottom:7px}.service strong{font-size:12px;display:block}.service small{display:block;color:var(--muted);margin-top:5px;font-size:10px}
+.schedule{display:grid;grid-template-columns:1fr 1fr;gap:12px}.calendar,.timebox{border:1px solid var(--line);border-radius:9px;padding:13px}.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.cal-head button{border:1px solid #454b55;background:#1b2027;color:#fff;cursor:pointer;font-size:22px;line-height:1;width:34px;height:32px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.cal-head button:hover{background:var(--red);border-color:var(--red)}.cal-head strong{font-size:13px;text-align:center;flex:1}.days,.dates{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}.days span{font-size:10px;color:var(--muted);padding:5px 0}.date{border:0;background:transparent;border-radius:50%;height:29px;width:29px;margin:auto;cursor:pointer;font-size:11px}.date:hover:not(:disabled){background:#ffe4e5}.date.active{background:var(--red);color:white}.date:disabled{color:#c7cbd1;cursor:default}.time-title{font-weight:750;font-size:13px;margin-bottom:12px}.time-title span{font-size:17px;margin-right:5px}.times{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.time{border:1px solid var(--line);background:white;border-radius:6px;padding:9px 3px;font-size:11px;cursor:pointer}.time.active{background:var(--red);border-color:var(--red);color:white}.confirm{width:100%;margin-top:16px;padding:14px;font-size:15px}.aside{background:#f5f6f8;border-radius:12px;padding:22px}.aside h3{margin:0 0 17px;font-size:17px}.reason{display:flex;gap:12px;margin:14px 0;align-items:flex-start}.reason .round{width:38px;height:38px;border-radius:50%;background:#ffe5e6;color:var(--red);display:grid;place-items:center;font-size:18px;flex-shrink:0}.reason strong{font-size:13px;display:block;margin:3px 0 4px}.reason p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}.aside hr{border:0;border-top:1px solid #dddfe3;margin:22px 0}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini img{width:100%;height:84px;object-fit:cover;border-radius:7px;display:block}.mini strong{font-size:12px;display:block;margin-top:5px}.note{font-size:12px;color:var(--muted);margin-top:10px}.success{display:none;margin-top:14px;border:1px solid #b5e3c4;background:#f0fff5;border-radius:8px;padding:14px;color:#176b37;font-size:14px;line-height:1.5}.success.show{display:block}footer{text-align:center;color:#8a9098;padding:0 20px 30px;font-size:12px}
+@media(max-width:850px){header{position:relative;z-index:10}nav{display:none;position:absolute;top:100%;left:0;right:0;background:#101418;padding:14px 20px 18px;flex-direction:column;gap:0;border-top:1px solid #30353a;box-shadow:0 14px 22px #0003}nav.open{display:flex}nav .mobile-auth{display:block;color:#ff777b;font-weight:700}nav a{padding:13px 4px;border-bottom:1px solid #282d32}.menu-toggle{display:inline-flex;align-items:center;justify-content:center}.booking-shell{grid-template-columns:1fr}.hero{min-height:400px}.aside{order:2}}
+@media(max-width:560px){.hero{min-height:430px}.carousel-controls{display:none}.carousel-caption{right:18px;bottom:25px;font-size:10px}.carousel-dots{left:22px;bottom:27px}.hero{height:auto}header{height:64px;padding:0 12px;gap:8px}.logo img{width:135px;height:48px}.actions .btn{padding:9px 11px;font-size:12px}.actions .btn-outline{display:inline-block}.menu-toggle{width:38px;height:38px}.hero{padding:42px 22px}.hero p{font-size:15px}.benefits{gap:12px}.booking-shell{padding:18px}.fields,.schedule{grid-template-columns:1fr}.services{grid-template-columns:repeat(2,1fr)}main{padding:0 10px}.times{grid-template-columns:repeat(3,1fr)}}
+
+.auth-overlay{position:fixed;inset:0;z-index:1000;background:rgba(6,9,12,.78);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}.auth-overlay[hidden]{display:none}.auth-card{position:relative;width:min(100%,430px);background:#fff;border-radius:18px;padding:30px;box-shadow:0 28px 90px #0007;max-height:calc(100dvh - 36px);overflow:auto}.auth-close{position:absolute;right:16px;top:13px;border:0;background:#f2f3f5;border-radius:50%;width:34px;height:34px;font-size:24px;cursor:pointer;color:#252930}.auth-brand{font-size:20px;font-weight:900;letter-spacing:1px;text-align:center}.auth-brand span{color:var(--red)}.auth-brand small{display:block;font-size:8px;letter-spacing:3px;margin-top:3px}.auth-kicker{text-align:center;color:var(--red);font-weight:800;letter-spacing:2px;font-size:10px;margin-top:23px}.auth-card h2{text-align:center;font-size:25px;margin:9px 0 7px}.auth-sub{text-align:center;color:var(--muted);font-size:13px;margin:0 0 20px}.auth-form{display:grid;gap:13px}.auth-form[hidden]{display:none}.auth-form label{font-size:12px;font-weight:750}.auth-form input{margin-top:6px}.auth-submit{width:100%;margin-top:4px}.auth-switch{text-align:center;font-size:13px;color:var(--muted);margin:18px 0 0}.auth-switch button{border:0;background:transparent;color:var(--red);font-weight:800;cursor:pointer;font-size:13px}.auth-demo-note{text-align:center;color:#9298a1;font-size:10px;line-height:1.4;margin:14px 0 0}.auth-message{display:none;background:#fff0f0;color:#b91c22;border-radius:7px;padding:10px;margin-top:12px;font-size:12px;line-height:1.4}.auth-message.show{display:block}.auth-message.ok{background:#effbf3;color:#176b37}body.auth-locked{overflow:hidden}body.auth-locked main,body.auth-locked .hero{filter:blur(2px)}
+@media(max-width:560px){.auth-card{padding:25px 20px;border-radius:15px}.auth-card h2{font-size:23px}.auth-overlay{padding:12px}}
+
+
+/* Glossify premium visual refresh */
+:root{--red:#f11d2a;--ink:#07090b;--muted:#a7adb6;--line:#30343a;--pale:#111418}
+body{background:#090b0e;color:#f5f6f7;font-family:Inter,Segoe UI,Arial,sans-serif}
+header{height:86px;background:rgba(5,7,9,.97);border-bottom:1px solid #ffffff12;padding:0 max(6vw,28px);position:relative;z-index:20}
+.logo img{width:190px;height:92px;object-fit:contain;object-position:center;background:transparent;mix-blend-mode:normal;border-radius:0}
+nav{gap:30px}nav a{font-size:14px;font-weight:650;color:#e4e5e8;transition:color .2s}nav a:hover{color:var(--red)}
+.btn{border-radius:999px;padding:14px 24px;transition:transform .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px)}.btn-red{background:linear-gradient(135deg,#ff2734,#d90816);box-shadow:0 10px 28px #ef252b35}.btn-ghost{display:inline-flex;align-items:center;text-decoration:none;color:#fff;border:1px solid #ffffff70;background:#07090b8a}
+.hero{min-height:535px;height:min(68vw,590px);max-height:650px;padding:65px max(6.2vw,28px);background:#080a0d;border-bottom:1px solid #ffffff16}
+.hero-slide{background-position:center 45%;filter:saturate(.93);transform:scale(1.02)}
+.hero::after{background:linear-gradient(90deg,rgba(4,6,8,.96) 0%,rgba(4,6,8,.83) 26%,rgba(4,6,8,.36) 55%,rgba(4,6,8,.06) 100%),linear-gradient(0deg,rgba(4,6,8,.55),transparent 24%)}
+.hero-content{max-width:540px}.eyebrow{font-size:12px;letter-spacing:4px;color:#f42b37}.hero h1{font-size:clamp(48px,6vw,78px);font-weight:900;line-height:.99;letter-spacing:-2.5px;margin:20px 0}.hero h1 em{color:var(--red);font-style:normal}.hero p{color:#e0e2e5;font-size:18px;max-width:440px;line-height:1.6}.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.carousel-controls,.carousel-arrow,.carousel-prev,.carousel-next{display:none!important;visibility:hidden!important;pointer-events:none!important}.carousel-dots{left:50%;transform:translateX(-50%);bottom:22px}.carousel-dot{width:8px;height:8px}.carousel-dot.active{width:28px}.carousel-caption{right:6vw;bottom:24px;font-size:10px;letter-spacing:2px;color:#e5e7eb}
+.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);background:#090b0e;border-bottom:1px solid #ffffff15;padding:23px max(6vw,28px);gap:0}.trust-strip>div{display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 16px;border-right:1px solid #ffffff18}.trust-strip>div:last-child{border-right:0}.trust-strip b{font-size:29px;color:var(--red)}.trust-strip strong,.trust-strip small{display:block}.trust-strip strong{font-size:13px;letter-spacing:.2px}.trust-strip small{color:#9ba1aa;font-size:12px;margin-top:5px}
+.showcase{padding:76px max(5vw,24px) 82px;background:radial-gradient(ellipse at 50% 0%,#1a1d22 0%,#0b0d10 56%)}.section-heading{text-align:center;max-width:700px;margin:0 auto 34px}.section-heading>span{font-size:10px;font-weight:800;letter-spacing:4px;color:var(--red)}.section-heading h2{font-size:clamp(30px,4vw,46px);margin:12px 0;color:#fff;letter-spacing:-1px}.section-heading h2 span{color:var(--red)}.section-heading p{color:#aeb4bd;font-size:15px;margin:0}.showcase-grid{max-width:1280px;margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.showcase-card{position:relative;display:block;height:255px;overflow:hidden;border-radius:13px;border:1px solid #ffffff20;color:#fff;text-decoration:none;background:#14171b;isolation:isolate}.showcase-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,5,7,.96),rgba(3,5,7,.08) 75%);z-index:-0}.showcase-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s;z-index:-1;filter:brightness(.82)}.showcase-card:hover img{transform:scale(1.07)}.showcase-card>div{position:absolute;left:20px;right:15px;bottom:18px}.showcase-card small{font-size:9px;letter-spacing:2px;color:#ff6069;font-weight:800}.showcase-card h3{font-size:21px;margin:8px 0 6px}.showcase-card span{font-size:12px;color:#d0d3d8}
+main{max-width:1320px;margin:0 auto 70px;padding:0 24px}.booking-shell{background:#111418;border:1px solid #2b3036;border-radius:18px;box-shadow:0 20px 70px #0006;padding:30px;grid-template-columns:minmax(0,1.8fr) minmax(280px,.85fr);color:#f5f6f7}.form-title{font-size:26px;color:#fff}.sub{color:#a7adb6}.field label,.section-label{color:#e7e9ec}input,select{background:#0b0e12;border-color:#343a42;color:#f5f6f7}input::placeholder{color:#777f89}.service{background:#0d1014;border-color:#353a42;color:#f5f6f7;min-height:100px;border-radius:12px}.service.selected{background:#241013;border:1px solid var(--red);color:#ff525c}.service small{color:#a6acb4}.calendar,.timebox{background:#0c0f13;border-color:#30363e}.cal-head strong,.time-title{color:#f2f4f6}.days span{color:#9ba2ac}.date{color:#e1e4e8}.date:hover:not(:disabled){background:#331317}.date:disabled{color:#50565f}.time{background:#11151a;border-color:#343a42;color:#dce0e4}.time.active{background:var(--red);color:#fff}.aside{background:#0b0e12;border:1px solid #2b3036}.aside h3{color:#fff}.reason .round{background:#2a1014;color:#ff3a46}.reason p{color:#a4abb5}.aside hr{border-color:#30363e}.mini img{height:94px}.mini strong{color:#e8eaed}.note{color:#9da4ae}.success{background:#102419;border-color:#245c38;color:#a9edbf}
+.auth-card{background:#11151a;color:#f6f7f9;border:1px solid #343a42}.auth-close{background:#242930;color:#fff}.auth-sub,.auth-switch,.auth-demo-note{color:#a6adb6}.auth-form label{color:#e8eaed}.auth-form input{background:#090c10;color:#fff;border-color:#363c44}.auth-brand{color:#fff}.auth-message{background:#2b1114;color:#ffb5ba}.auth-message.ok{background:#102419;color:#a9edbf}
+footer{color:#7f8791}
+@media(max-width:950px){.showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.trust-strip{padding-left:18px;padding-right:18px}.trust-strip>div{padding:10px 8px}.trust-strip strong{font-size:12px}}
+@media(max-width:850px){header{height:76px;padding:0 20px}.logo img{width:160px;height:70px}.hero{min-height:500px;height:68vh;padding:54px 30px}.hero-content{max-width:500px}.carousel-controls{display:none}.trust-strip{grid-template-columns:repeat(2,1fr);padding:15px}.trust-strip>div:nth-child(2){border-right:0}.trust-strip>div:nth-child(-n+2){border-bottom:1px solid #ffffff18}.trust-strip>div{justify-content:flex-start;padding:14px}.booking-shell{grid-template-columns:1fr}.aside{order:2}}
+@media(max-width:560px){header{height:68px;padding:0 12px}.logo img{width:135px;height:58px}.actions .btn{padding:9px 11px;font-size:11px}.menu-toggle{border-color:#ffffff40}.hero{min-height:520px;height:75vh;padding:46px 22px 68px;align-items:center}.hero::after{background:linear-gradient(90deg,rgba(4,6,8,.92),rgba(4,6,8,.52)),linear-gradient(0deg,rgba(4,6,8,.55),transparent 50%)}.hero h1{font-size:clamp(45px,13vw,64px);letter-spacing:-1.8px}.hero p{font-size:15px;max-width:340px}.eyebrow{letter-spacing:3px;font-size:10px}.hero-ctas{gap:9px}.hero-ctas .btn{padding:12px 16px;font-size:12px}.carousel-controls,.carousel-arrow,.carousel-prev,.carousel-next{display:none!important;visibility:hidden!important;pointer-events:none!important}.carousel-arrow{display:none}.carousel-dots{left:22px;transform:none;bottom:26px}.carousel-caption{display:none}.trust-strip{grid-template-columns:1fr 1fr;padding:10px}.trust-strip>div{gap:9px;padding:12px 6px}.trust-strip b{font-size:22px}.trust-strip strong{font-size:10px}.trust-strip small{font-size:10px}.showcase{padding:52px 16px}.section-heading h2{font-size:31px}.section-heading p{font-size:13px;line-height:1.5}.showcase-grid{grid-template-columns:1fr 1fr;gap:10px}.showcase-card{height:205px;border-radius:10px}.showcase-card>div{left:12px;bottom:13px}.showcase-card h3{font-size:16px}.showcase-card span{font-size:10px}.showcase-card small{font-size:8px;letter-spacing:1px}main{padding:0 10px;margin-bottom:45px}.booking-shell{padding:17px;border-radius:14px}.form-title{font-size:22px}.fields,.schedule{grid-template-columns:1fr}.services{grid-template-columns:repeat(2,1fr)}.times{grid-template-columns:repeat(3,1fr)}.aside{padding:17px}.mini img{height:82px}}
+
+.logo,.logo img{background:transparent!important;box-shadow:none!important}.carousel-controls,.carousel-arrow,.carousel-prev,.carousel-next{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.logo,.logo img{background:transparent!important;box-shadow:none!important;border-radius:0!important;mix-blend-mode:normal!important}.carousel-controls,.carousel-arrow,.carousel-prev,.carousel-next,[aria-label*="Previous slide"],[aria-label*="Next slide"]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+
+/* Footer alignment override: prevent global site nav rules from affecting footer quick links */
+.site-footer nav.footer-col{display:block!important;position:relative!important;inset:auto!important;flex-direction:initial!important;align-items:initial!important;justify-content:initial!important;gap:0!important;background:transparent!important;padding:0 22px!important;border-top:0!important;box-shadow:none!important;width:auto!important;height:auto!important;}
+.site-footer nav.footer-col h3{display:block!important;width:auto!important;white-space:normal!important;margin:4px 0 18px!important;}
+.site-footer nav.footer-col .footer-links{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;}
+.site-footer nav.footer-col .footer-links a{display:block!important;width:auto!important;white-space:normal!important;}
+@media(max-width:900px){.site-footer .footer-main{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:26px!important}.site-footer .footer-main>.footer-col{padding:0 16px!important}.site-footer .footer-brand{padding:0 16px 0 0!important}}
+@media(max-width:560px){.site-footer .footer-main{grid-template-columns:minmax(0,1fr)!important;padding:24px 20px!important}.site-footer .footer-main>.footer-col{border-left:0!important;border-top:1px solid #353535!important;padding:20px 0 0!important}.site-footer .footer-brand{padding:0 0 20px!important}.site-footer .footer-bottom{display:flex!important;flex-direction:column!important;gap:12px!important;text-align:center!important}.site-footer .footer-legal{flex-wrap:wrap!important;justify-content:center!important}}
+
+/* Premium black-and-red footer */
+.site-footer{position:relative;isolation:isolate;overflow:hidden;background:#030405;color:#f5f5f5;margin-top:64px;border-top:1px solid #333;font-family:inherit}
+.site-footer:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.91)),url('hero-scene-4.jpg') center/cover no-repeat;opacity:1}
+/* Subtle watermark extracted from the original Glossify logo car */
+.site-footer:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url('footer-car-watermark.png') center 58%/min(76vw,820px) auto no-repeat;opacity:.075}
+@media(max-width:560px){.site-footer:after{background-position:center 62%;background-size:94vw auto;opacity:.055}}
+
+.footer-main{width:min(100%,1240px);box-sizing:border-box;margin:0 auto;padding:30px 30px 24px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.78fr) minmax(0,.95fr) minmax(0,1.05fr);gap:0;align-items:stretch}
+.footer-brand,.footer-col{min-width:0;box-sizing:border-box}
+.footer-brand{padding:0 24px 0 0}
+.footer-main>.footer-col{padding:0 22px;border-left:1px solid #353535}
+.footer-logo{width:min(205px,100%);height:104px;object-fit:contain;object-position:left center;display:block;margin:0 0 2px;filter:drop-shadow(0 0 10px #ef252b22)}
+.footer-tagline{font-size:12px;font-weight:800;color:#fff;margin:2px 0 12px;white-space:nowrap}.footer-tagline span{color:#ef252b}.footer-description{font-size:11px;line-height:1.55;color:#c4c7cb;max-width:240px;margin:0 0 13px}
+.footer-socials{display:flex;gap:8px;flex-wrap:wrap}.footer-socials a{width:27px;height:27px;border:1px solid #ef252b;border-radius:50%;display:grid;place-items:center;color:#fff;text-decoration:none;font-size:12px;font-weight:800;transition:background .2s,transform .2s}.footer-socials a:hover{background:#ef252b;transform:translateY(-2px)}
+.footer-socials svg{width:14px;height:14px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.footer-socials .icon-fill{fill:currentColor;stroke:none}.footer-socials .social-facebook{fill:currentColor;stroke:none;width:15px;height:15px}.footer-socials .social-youtube{fill:none;stroke:currentColor;stroke-width:1.7}.footer-socials .social-youtube .youtube-play{fill:currentColor;stroke:none}
+.footer-contact-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.footer-book>svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}.footer-book b{font-weight:850}
+
+.footer-col h3{font-size:13px;line-height:1.3;margin:4px 0 18px;text-transform:uppercase;color:#f7f7f7;font-weight:850;letter-spacing:.25px}.footer-col h3 span{color:#ef252b}.footer-col h3:after{content:"";display:block;width:38px;height:2px;background:#ef252b;margin-top:7px}
+.footer-links{display:grid;gap:10px}.footer-links a{display:flex;align-items:center;gap:8px;color:#d9dadd;text-decoration:none;font-size:11px;line-height:1.35;transition:color .2s}.footer-links a:before{content:"›";font-size:19px;line-height:10px;color:#ef252b;flex:0 0 auto}.footer-links a:hover{color:#ef252b}
+.footer-services a:before{content:"✦";font-size:13px}
+.footer-contact{display:grid;gap:13px}.footer-contact-item{display:grid;grid-template-columns:30px minmax(0,1fr);gap:9px;align-items:center}.footer-contact-icon{width:29px;height:29px;border:1.5px solid #ef252b;border-radius:50%;display:grid;place-items:center;color:#ef252b;font-size:14px;box-sizing:border-box}.footer-contact-item strong{display:block;color:#f4f4f4;font-size:11px;font-weight:650;overflow-wrap:anywhere;line-height:1.35}.footer-contact-item small{display:block;color:#aeb2b7;font-size:9px;line-height:1.35;margin-top:3px}.footer-book{display:flex;max-width:100%;box-sizing:border-box;align-items:center;justify-content:center;gap:10px;border:1px solid #ef252b;border-radius:8px;padding:10px 11px;margin-top:15px;color:#fff;text-decoration:none;font-size:11px;font-weight:850;letter-spacing:.3px;transition:background .2s;white-space:nowrap}.footer-book:hover{background:#ef252b}
+.footer-bottom{box-sizing:border-box;border-top:1px solid #4a4a4a;border-bottom:1px solid #ef252b;width:min(100%,1240px);margin:0 auto;min-height:52px;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:9px;color:#c9c9c9}.footer-motto{color:#fff;font-family:Georgia,serif;font-style:italic;font-size:14px;white-space:nowrap}.footer-motto em{color:#ef252b}.footer-legal{display:flex;gap:9px;flex-wrap:wrap}.footer-legal a{color:#d8d8d8;text-decoration:none}.footer-legal a:hover{color:#ef252b}.footer-legal a+a{border-left:1px solid #ef252b;padding-left:9px}
+.footer-car-strip{height:78px;background:linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.4)),url('hero-scene-1.jpg') center 63%/cover no-repeat;border-top:1px solid #282828;position:relative}.footer-car-strip:after{content:"";position:absolute;right:0;bottom:0;width:30%;height:2px;background:#ef252b;box-shadow:0 0 15px 2px #ef252b}
+@media(max-width:900px){.footer-main{grid-template-columns:1fr 1fr;gap:0;padding:30px 26px 24px}.footer-brand{padding:0 22px 24px 0}.footer-main>.footer-col{padding:0 0 24px 22px}.footer-main>.footer-col:nth-child(3){border-left:0;padding-left:0}.footer-main>.footer-col:nth-child(4){padding-left:22px}.footer-bottom{justify-content:center;text-align:center}.footer-description{max-width:360px}}
+@media(max-width:560px){.site-footer{margin-top:42px}.footer-main{grid-template-columns:1fr;padding:28px 22px 10px;gap:0}.footer-brand{padding:0 0 24px}.footer-main>.footer-col,.footer-main>.footer-col:nth-child(3),.footer-main>.footer-col:nth-child(4){border-left:0;border-top:1px solid #353535;padding:20px 0}.footer-logo{height:96px}.footer-col h3{margin:0 0 15px}.footer-bottom{padding:15px 18px;gap:12px}.footer-motto{order:3;width:100%}.footer-car-strip{height:58px}.footer-contact{gap:12px}}
+
+/* Final footer alignment: keep each column's content left-aligned and grouped */
+.site-footer .footer-main{
+  width:100%!important;
+  max-width:1500px!important;
+  grid-template-columns:minmax(250px,1.25fr) minmax(180px,.8fr) minmax(270px,1fr) minmax(330px,1.2fr)!important;
+  padding:30px 28px 24px!important;
+  gap:0!important;
+}
+.site-footer .footer-brand,
+.site-footer .footer-col,
+.site-footer nav.footer-col{
+  text-align:left!important;
+}
+.site-footer nav.footer-col{
+  display:block!important;
+  align-self:stretch!important;
+  padding:0 28px!important;
+}
+.site-footer nav.footer-col h3,
+.site-footer .footer-col h3{
+  text-align:left!important;
+  margin:4px 0 22px!important;
+}
+.site-footer nav.footer-col .footer-links,
+.site-footer .footer-col .footer-links{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  justify-items:stretch!important;
+  align-items:start!important;
+  gap:13px!important;
+  text-align:left!important;
+}
+.site-footer nav.footer-col .footer-links a,
+.site-footer .footer-col .footer-links a{
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+  text-align:left!important;
+  width:100%!important;
+  margin:0!important;
+}
+.site-footer .footer-contact-item,
+.site-footer .footer-contact-item>div{
+  text-align:center!important;
+}
+.site-footer .footer-contact-item{
+  grid-template-columns:36px minmax(0,1fr)!important;
+}
+.site-footer .footer-book{width:100%!important}
+.site-footer .footer-bottom{width:100%!important;max-width:1500px!important}
+@media(max-width:1050px){
+ .site-footer .footer-main{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:26px!important}
+ .site-footer .footer-main>.footer-col{padding:0 18px!important}
+ .site-footer .footer-main>.footer-col:nth-child(3){border-left:0!important}
+}
+@media(max-width:560px){
+ .site-footer .footer-main{grid-template-columns:minmax(0,1fr)!important;padding:24px 20px!important}
+ .site-footer .footer-main>.footer-col,
+ .site-footer .footer-main>.footer-col:nth-child(3),
+ .site-footer .footer-main>.footer-col:nth-child(4){border-left:0!important;border-top:1px solid #353535!important;padding:20px 0!important}
+ .site-footer nav.footer-col{padding:20px 0!important}
+ .site-footer .footer-brand{padding:0 0 20px!important}
+ .site-footer .footer-contact-item,.site-footer .footer-contact-item>div{text-align:left!important}
+}
+
+
+/* Glossify signature detail: subtle racing-red light sweep; does not change footer grid alignment */
+.site-footer{position:relative;isolation:isolate;overflow:hidden}
+.site-footer::before{content:"";position:absolute;z-index:5;top:0;left:-35%;width:28%;height:2px;pointer-events:none;background:linear-gradient(90deg,transparent,#ff2638,#fff, #ff2638,transparent);box-shadow:0 0 12px rgba(255,30,48,.85);animation:glossifySignatureSweep 7s ease-in-out infinite}
+@keyframes glossifySignatureSweep{0%{left:-35%;opacity:.25}12%{opacity:1}55%{left:108%;opacity:.9}56%,100%{left:108%;opacity:0}}
+.site-footer .footer-socials a{transition:transform .22s ease,background .22s ease,box-shadow .22s ease,border-color .22s ease}
+.site-footer .footer-socials a:hover{transform:translateY(-4px);background:#e50920;border-color:#ff3a4c;box-shadow:0 0 0 4px rgba(229,9,32,.13),0 0 18px rgba(229,9,32,.35)}
+.site-footer .footer-book{transition:background .22s ease,box-shadow .22s ease,transform .22s ease}
+.site-footer .footer-book:hover{background:linear-gradient(100deg,#e50920,#a90014);box-shadow:0 8px 28px rgba(229,9,32,.22);transform:translateY(-2px)}
+@media(prefers-reduced-motion:reduce){.site-footer::before{animation:none;left:36%;opacity:.75}.site-footer .footer-socials a,.site-footer .footer-book{transition:none}}
+
+
+
+
+/* Glossify logo-inspired glossy paint shimmer on the hero word SHINE */
+.hero h1 em.shine-word{position:relative;display:inline-block;color:transparent;background:linear-gradient(112deg,#f11d2a 0%,#ff3945 27%,#fff4f5 43%,#ff7a82 49%,#f11d2a 63%,#c90816 100%);background-size:240% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 12px rgba(241,29,42,.22));animation:glossifyPaintShine 4.2s ease-in-out infinite}
+.hero h1 em.shine-word::after{content:"";position:absolute;left:8%;right:7%;top:5%;height:2px;border-radius:50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);opacity:.7;filter:blur(.5px);pointer-events:none;animation:glossifyGlint 4.2s ease-in-out infinite}
+@keyframes glossifyPaintShine{0%,12%{background-position:100% 0}58%,100%{background-position:0 0}}
+@keyframes glossifyGlint{0%,20%{transform:translateX(-25%) scaleX(.3);opacity:0}45%{transform:translateX(20%) scaleX(1);opacity:.85}68%,100%{transform:translateX(55%) scaleX(.35);opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero h1 em.shine-word,.hero h1 em.shine-word::after{animation:none}.hero h1 em.shine-word{background-position:50% 0}}
+
+
+/* Dedicated service links */
+.dedicated-services{scroll-margin-top:18px;border-top:1px solid #202329}
+.service-detail-grid .showcase-card{min-height:245px}
+.mini{display:block;color:inherit;text-decoration:none;cursor:pointer}
+.mini:hover strong{color:var(--red)}
+
+/* Services navigation dropdown */
+.nav-dropdown{position:relative;display:flex;align-items:center;gap:3px;z-index:10000}
+nav{position:relative;z-index:9999;overflow:visible}
+nav .nav-dropdown .nav-services-link{padding:0}
+.nav-dropdown-toggle{border:0;background:transparent;color:#f4f4f4;padding:5px 3px;cursor:pointer;font-size:13px;line-height:1;flex-shrink:0}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:225px;max-height:70vh;overflow:auto;padding:12px 8px 8px;background:#101418;border:1px solid #343941;border-radius:10px;box-shadow:0 14px 30px #0008;z-index:99999;isolation:isolate}
+.nav-dropdown-menu a{display:block!important;padding:11px 12px!important;border-radius:6px;border:0!important;white-space:nowrap;color:#f4f4f4;text-decoration:none}
+.nav-dropdown-menu a:hover,.nav-dropdown-menu a:focus-visible{background:#24282e;color:#ff343c}
+.nav-dropdown.open .nav-dropdown-menu,.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+@media(max-width:850px){nav .nav-dropdown{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:0}nav .nav-dropdown .nav-services-link{padding:13px 4px;border-bottom:1px solid #282d32}nav .nav-dropdown-toggle{padding:13px 10px;border-bottom:1px solid #282d32;font-size:18px}nav .nav-dropdown-menu{position:static;grid-column:1/-1;min-width:0;max-height:none;overflow:visible;box-shadow:none;border-radius:8px;margin:4px 0 8px;background:#0b0d10}nav .nav-dropdown-menu a{white-space:normal;padding:11px 12px!important}}
+
+
+/* About / brand statement section above Care that turns heads */
+.brand-story{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);min-height:390px;background:#fff;overflow:hidden;position:relative}
+.brand-story-visual{position:relative;min-height:390px;background:#ef171d;clip-path:polygon(0 0,74% 0,100% 100%,0 100%);display:flex;align-items:center;justify-content:center;padding:28px 14% 28px 5%}
+.brand-story-visual img{width:100%;height:320px;object-fit:cover;object-position:center;border-radius:5px;mix-blend-mode:normal;filter:contrast(1.04)}
+.brand-story-copy{padding:34px clamp(24px,5vw,76px) 42px 20px;display:flex;flex-direction:column;justify-content:center}
+.brand-story-copy h2{font-size:clamp(28px,3.5vw,48px);line-height:1.12;letter-spacing:-1.2px;text-align:center;margin:0 0 34px;color:#08090b;font-weight:850}
+.brand-story-copy h2 span{color:var(--red)}
+.brand-story-copy p{font-size:15px;line-height:1.75;color:#25282d;margin:0 0 22px;text-align:justify}
+.brand-story-copy p strong{font-weight:800}
+.brand-story-actions{display:flex;justify-content:flex-end;margin-top:2px}
+.brand-story-actions a{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:8px;background:var(--red);color:white;text-decoration:none;font-weight:750;transition:transform .2s,background .2s}
+.brand-story-actions a:hover{background:#cc151b;transform:translateY(-2px)}
+@media(max-width:760px){.brand-story{grid-template-columns:1fr}.brand-story-visual{min-height:230px;clip-path:none;padding:20px}.brand-story-visual img{height:210px;max-width:500px}.brand-story-copy{padding:28px 22px 34px}.brand-story-copy h2{margin-bottom:22px}.brand-story-copy p{font-size:14px}.brand-story-actions{justify-content:center}}
+
+
+/* Mobile navigation: full-width panel with reliable hamburger toggle */
+@media (max-width: 850px) {
+  header { position: relative; z-index: 1000; isolation: isolate; }
+  #mainNav {
+    display: none;
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    max-height: calc(100dvh - 76px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 18px 22px;
+    margin: 0;
+    background: #090b0e;
+    border-top: 1px solid #30343a;
+    box-shadow: 0 18px 30px rgba(0,0,0,.45);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    z-index: 9999;
+  }
+  #mainNav.open { display: flex; }
+  #mainNav > a, #mainNav .nav-services-link {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    min-height: 46px;
+    padding: 12px 4px;
+    border-bottom: 1px solid #282d32;
+  }
+  #mainNav .nav-dropdown { width: 100%; display: grid; grid-template-columns: 1fr 42px; align-items: center; }
+  #mainNav .nav-dropdown-menu {
+    display: none;
+    position: static;
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 8px;
+    padding: 6px 12px;
+    background: #14181d;
+    border: 1px solid #30343a;
+    border-radius: 10px;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  #mainNav .nav-dropdown.open .nav-dropdown-menu,
+  #mainNav .nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+  #mainNav .nav-dropdown-menu a { display: block; padding: 12px 6px; border-bottom: 1px solid #292e34; }
+  #mainNav .nav-dropdown-menu a:last-child { border-bottom: 0; }
+  .menu-toggle { position: relative; z-index: 10001; flex-shrink: 0; }
+}
+@media (max-width: 560px) {
+  #mainNav { top: 68px; max-height: calc(100dvh - 68px); }
+  header { box-sizing: border-box; width: 100%; }
+  .actions { flex-shrink: 0; }
+  .actions .btn { white-space: nowrap; }
+}
+
+
+/* Premium Foam Wash feature + scroll reveal */
+.foam-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:430px;background:#0d1014;color:#fff;overflow:hidden;position:relative}
+.foam-feature-copy{padding:clamp(34px,5vw,76px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;z-index:1}
+.foam-feature-kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#ff343c;font-weight:800;margin-bottom:15px;display:flex;align-items:center;gap:12px}
+.foam-feature-kicker:after{content:"";display:block;width:44px;height:2px;background:#ef252b}
+.foam-feature h2{font-size:clamp(42px,5.2vw,72px);line-height:.98;letter-spacing:-.045em;margin:0 0 16px;font-weight:850}
+.foam-feature h2 span{color:#ef252b}
+.foam-feature .foam-subtitle{font-size:clamp(18px,2vw,25px);color:#e7e7e7;margin:0 0 17px}
+.foam-feature .foam-description{font-size:16px;line-height:1.8;color:#c4c8ce;max-width:540px;margin:0 0 25px}
+.foam-feature-points{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 27px}
+.foam-feature-points span{border:1px solid #41464d;border-radius:7px;padding:10px 12px;font-size:12px;color:#f2f2f2}
+.foam-feature-points b{color:#ff343c;margin-right:6px}
+.foam-feature-cta{display:inline-flex;align-items:center;gap:12px;text-decoration:none;background:#ef1720;color:white;padding:14px 24px;border-radius:7px;font-weight:800;transition:transform .25s ease,box-shadow .25s ease}
+.foam-feature-cta:hover{transform:translateY(-3px);box-shadow:0 10px 28px #ef172055}
+.foam-feature-image{position:relative;min-height:430px;overflow:hidden}
+.foam-feature-image:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0d1014 0%,transparent 30%),linear-gradient(0deg,#0d101422,transparent 45%);pointer-events:none}
+.foam-feature-image img{width:100%;height:100%;min-height:430px;object-fit:cover;object-position:center;display:block;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.foam-feature:hover .foam-feature-image img{transform:scale(1.035)}
+body.reveal-ready .scroll-reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1)}
+body.reveal-ready .scroll-reveal.is-visible{opacity:1;transform:translateY(0)}
+@media(max-width:760px){.foam-feature{grid-template-columns:1fr}.foam-feature-copy{padding:34px 23px 30px}.foam-feature-image{min-height:260px;order:-1}.foam-feature-image img{min-height:260px;max-height:330px}.foam-feature h2{font-size:48px}.foam-feature .foam-description{font-size:15px}.foam-feature-points span{padding:9px 10px}}
+@media(prefers-reduced-motion:reduce){body.reveal-ready .scroll-reveal{opacity:1;transform:none;transition:none}.foam-feature-image img,.foam-feature-cta{transition:none}}
+
+
+/* Glossify customer booking history */
+.my-bookings-section{max-width:1240px;margin:48px auto 60px;padding:0 20px;scroll-margin-top:28px}
+.my-bookings-panel{background:#11171c;color:#f5f6f7;border:1px solid #303940;border-radius:16px;padding:28px;box-shadow:0 18px 50px #10141812}
+.my-bookings-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+.my-bookings-heading h2{font-size:clamp(22px,3vw,30px);margin:0 0 6px}
+.my-bookings-heading p{margin:0;color:#aeb7bf;font-size:14px}
+.my-bookings-actions{display:flex;gap:10px;align-items:center}
+.my-bookings-btn{border:1px solid #59636b;background:#202930;color:#fff;border-radius:7px;padding:10px 14px;font-weight:700;cursor:pointer}
+.my-bookings-btn.primary{background:var(--red);border-color:var(--red)}
+.my-bookings-message{padding:18px;border:1px dashed #58636c;border-radius:10px;color:#c4cbd1;text-align:center}
+.my-bookings-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.my-booking-card{background:#1a2229;border:1px solid #35414a;border-radius:12px;padding:18px;min-width:0}
+.my-booking-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.my-booking-service{font-size:17px;font-weight:800;color:#fff}
+.my-booking-status{font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:#54451f;color:#ffd77b;white-space:nowrap}
+.my-booking-status.confirmed{background:#173f2b;color:#8be0aa}
+.my-booking-status.completed{background:#1d3d50;color:#9bd9f7}
+.my-booking-status.cancelled{background:#51272a;color:#ffaaaa}
+.my-booking-details{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.my-booking-detail small{display:block;color:#98a4ad;font-size:11px;margin-bottom:4px}
+.my-booking-detail strong{display:block;color:#edf0f2;font-size:13px;overflow-wrap:anywhere}
+.my-booking-reference{margin-top:14px;padding-top:12px;border-top:1px solid #35414a;color:#98a4ad;font-size:11px}
+@media(max-width:700px){.my-bookings-section{margin:30px auto;padding:0 14px}.my-bookings-panel{padding:19px}.my-bookings-heading{align-items:flex-start;flex-direction:column}.my-bookings-list{grid-template-columns:1fr}}
+
+</style>
+
+<style id="six-service-icons-layout">
+.showcase-six-icons{width:100%;margin:30px auto 0;overflow:hidden;background:#0b0d10;border:1px solid #292d33;border-radius:6px}
+.showcase-six-icons img{display:block;width:100%;height:auto;object-fit:contain}
+@media(max-width:700px){
+  .showcase-six-icons{overflow:visible}
+  .showcase-six-icons img{width:100%;max-width:100%;height:auto;transform:none}
+}
+</style>
+
+<style id="clickable-icons-compact">
+.clickable-service-strip{position:relative;width:100%;max-width:100%;margin:30px auto 0;overflow:hidden;background:transparent;border:0;border-radius:0;line-height:0}
+.clickable-service-strip>img{display:block;width:100%;height:auto;max-width:100%;transform:none;object-fit:contain}
+.service-hotspot{position:absolute;top:0;bottom:0;width:20%;left:calc(var(--i) * 20%);display:block;background:transparent;border:0;cursor:pointer;outline-offset:-5px}
+.service-hotspot:hover{background:rgba(229,43,50,.07)}
+.service-hotspot:focus-visible{outline:2px solid #ed3037;border-radius:8px}
+@media(max-width:700px){
+ .clickable-service-strip{overflow:hidden}
+ .clickable-service-strip>img{width:100%;max-width:100%;transform:none}
+ .service-hotspot{top:0;bottom:0;width:16.666667%}
+}
+</style>
+
+<style id="service-icon-flip-hover">
+.clickable-service-strip .service-hotspot{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0;perspective:1000px;outline:none;overflow:hidden}
+.clickable-service-strip .service-hotspot:hover,
+.clickable-service-strip .service-hotspot:focus-visible{background:transparent!important;box-shadow:none!important;outline:none}
+.clickable-service-strip .service-hotspot::after{content:"";position:absolute;inset:0;background-image:url("glossify-six-services-red.png");background-size:500% 100%;background-position:calc(var(--i) * 25%) center;background-repeat:no-repeat;opacity:0;transform:rotateY(90deg);transform-origin:center center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .24s ease-out,opacity .16s ease;pointer-events:none;will-change:transform,opacity}
+.clickable-service-strip .service-hotspot:hover::after,
+.clickable-service-strip .service-hotspot:focus-visible::after{opacity:1;transform:rotateY(0deg)}
+@media(hover:none){.clickable-service-strip .service-hotspot:active::after{opacity:1;transform:rotateY(0deg)}}
+@media(prefers-reduced-motion:reduce){.clickable-service-strip .service-hotspot::after{transition:none}}
+</style>
+<style>
+/* Glossify signature car preloader */
+#glossify-preloader{position:fixed;inset:0;z-index:999999;background:radial-gradient(ellipse at center,#191b20 0%,#08090b 60%,#030304 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;opacity:1;visibility:visible;transition:opacity .65s ease,visibility .65s ease;overflow:hidden}
+#glossify-preloader.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+#glossify-preloader .loader-glow{position:absolute;width:min(520px,85vw);height:110px;border-radius:50%;background:radial-gradient(ellipse,rgba(239,37,43,.18),transparent 70%);filter:blur(12px);transform:translateY(28px)}
+#glossify-preloader .loader-car.loader-logo{width:clamp(130px,24vw,210px);height:auto;max-height:190px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(239,37,43,.45));}
+.loader-car{position:relative;width:190px;max-width:55vw;z-index:1;animation:glossify-drive 1.25s cubic-bezier(.2,.7,.3,1) both;filter:drop-shadow(0 0 12px rgba(239,37,43,.35))}
+#glossify-preloader .loader-track{position:relative;width:min(260px,70vw);height:2px;background:rgba(255,255,255,.12);overflow:hidden;border-radius:10px}
+#glossify-preloader .loader-track:after{content:"";position:absolute;inset:0 auto 0 -45%;width:45%;background:linear-gradient(90deg,transparent,#ff343b,#fff,transparent);box-shadow:0 0 12px #ef252b;animation:glossify-track 1.15s ease-in-out infinite}
+#glossify-preloader .loader-brand{color:#f7f7f7;font:800 14px/1.2 Inter,Segoe UI,Arial,sans-serif;letter-spacing:.28em;text-transform:uppercase;margin-top:2px}
+#glossify-preloader .loader-brand span{color:#ef252b}
+#glossify-preloader .loader-caption{color:#9b9da3;font:500 9px/1.2 Inter,Segoe UI,Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;margin-top:-14px}
+@keyframes glossify-drive{0%{transform:translateX(-70px) scale(.86);opacity:0}55%{opacity:1}100%{transform:translateX(0) scale(1);opacity:1}}
+@keyframes glossify-track{0%{left:-45%}100%{left:110%}}
+@media(prefers-reduced-motion:reduce){#glossify-preloader .loader-car,#glossify-preloader .loader-track:after{animation:none}#glossify-preloader{transition:none}}
+</style>
+
+
+<style id="premium-service-sections">
+@media(min-width:761px){
+ .service-feature-reverse .foam-feature-image{order:0}
+ .service-feature-reverse .foam-feature-copy{order:1}
+}
+.foam-feature{border-bottom:1px solid #252a30}
+.foam-feature-copy{background:radial-gradient(ellipse at 10% 15%,rgba(239,37,43,.07),transparent 45%),#0d1014}
+.foam-feature-kicker{line-height:1.4}
+.foam-feature-points span{background:rgba(255,255,255,.025);transition:border-color .25s,background .25s}
+.foam-feature-points span:hover{border-color:#ef252b;background:rgba(239,37,43,.08)}
+@media(max-width:760px){
+ .service-feature-reverse .foam-feature-image{order:-1}
+ .service-feature-reverse .foam-feature-copy{order:0}
+}
+</style>
+
+<style id="glossify-chatbot-viewport-fix">
+#glossify-chat-panel{top:18px!important;bottom:166px!important;height:auto!important;min-height:440px!important;max-height:calc(100vh - 190px)!important;width:min(430px,calc(100vw - 28px))!important;box-sizing:border-box!important;}
+@media(max-width:600px){
+#glossify-chat-panel{left:10px!important;right:10px!important;top:10px!important;bottom:auto!important;width:auto!important;min-height:0!important;height:calc(var(--gc-vh, 100dvh) - 20px)!important;max-height:calc(var(--gc-vh, 100dvh) - 20px)!important;}
+#glossify-chat-panel .gc-messages{min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain}
+#glossify-chat-panel .gc-body{min-height:0!important;overflow-y:auto!important}
+#glossify-chat-panel form{flex-shrink:0!important}
+#glossify-chat-panel input, #glossify-chat-panel textarea{font-size:16px!important}
+}
+/* GLOSSIFY signature footer experience */
+.footer-signature{position:relative;z-index:1;isolation:isolate;max-width:1440px;margin:0 auto;padding:34px 5.2% 25px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.13);background:linear-gradient(105deg,rgba(13,14,16,.98),rgba(5,5,6,.82) 62%,rgba(25,5,8,.8))}
+.footer-signature:before{content:"G";position:absolute;z-index:-1;right:7%;top:-105px;font:italic 420px/.9 Georgia,serif;color:rgba(255,255,255,.025);pointer-events:none}
+.footer-signature:after{content:"";position:absolute;z-index:-1;right:0;top:0;width:36%;height:100%;background:linear-gradient(90deg,transparent,rgba(220,20,35,.10));pointer-events:none}
+.signature-kicker{display:flex;align-items:center;gap:11px;color:#aaa;font-size:9px;font-weight:800;letter-spacing:2.5px}
+.signature-pulse{width:7px;height:7px;border-radius:50%;background:#f12532;box-shadow:0 0 0 5px rgba(241,37,50,.12),0 0 15px #f12532}
+.signature-line{height:1px;width:48px;background:#d51c29;opacity:.8}
+.signature-content{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:29px 0 26px}
+.signature-copy{max-width:690px}
+.signature-eyebrow{margin:0 0 10px;color:#e52a36;font-size:10px;font-weight:800;letter-spacing:3px}
+.signature-copy h2{margin:0;color:#f6f6f6;font-size:clamp(34px,5.1vw,68px);line-height:.94;letter-spacing:-2.8px;font-weight:900}
+.signature-copy h2 span{color:#ed2532;text-shadow:0 0 28px rgba(237,37,50,.18)}
+.signature-copy>p:last-child{max-width:470px;margin:16px 0 0;color:#aaa;font-size:13px;line-height:1.75}
+.signature-cta{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:220px;min-height:78px;box-sizing:border-box;padding:17px 60px 17px 20px;border:1px solid rgba(239,37,49,.65);background:linear-gradient(110deg,#b80f1b,#ed202d);color:white;text-decoration:none;clip-path:polygon(0 0,100% 0,100% 76%,90% 100%,0 100%);transition:transform .25s,filter .25s;box-shadow:0 12px 35px rgba(190,12,27,.18)}
+.signature-cta:hover{transform:translateY(-4px);filter:brightness(1.12)}
+.signature-cta .cta-small{font-size:8px;letter-spacing:1.8px;opacity:.78;font-weight:700}
+.signature-cta strong{font-size:14px;letter-spacing:1px;margin-top:5px}
+.signature-cta .cta-arrow{position:absolute;right:19px;top:50%;transform:translateY(-50%);font-size:27px;font-weight:300}
+.signature-bottom{display:flex;align-items:center;gap:28px;color:#777;font-size:8px;font-weight:800;letter-spacing:1.8px}
+.signature-bottom span:not(.signature-note){padding-right:24px;border-right:1px solid #393939}
+.signature-note{margin-left:auto;color:#b8b8b8;letter-spacing:2px}
+@media(max-width:700px){.footer-signature{padding:27px 22px 20px}.signature-content{align-items:flex-start;flex-direction:column;gap:22px;padding:25px 0 22px}.signature-copy h2{font-size:clamp(37px,10vw,56px);letter-spacing:-1.8px}.signature-copy>p:last-child{font-size:12px}.signature-cta{width:100%;min-height:70px}.signature-bottom{gap:12px;flex-wrap:wrap}.signature-bottom span:not(.signature-note){padding-right:12px}.signature-note{width:100%;margin:3px 0 0}}
+@media(prefers-reduced-motion:reduce){.signature-cta{transition:none}}
+
+
+
+/* Cinematic signature-footer upgrade */
+.footer-signature{--shine-x:50%;--shine-y:50%;position:relative;overflow:hidden;}
+.signature-ghost{position:absolute;z-index:1;left:50%;bottom:-.22em;transform:translateX(-50%);white-space:nowrap;font-size:clamp(100px,19vw,270px);line-height:.8;font-weight:1000;letter-spacing:-.085em;color:rgba(255,255,255,.035);-webkit-text-stroke:1.5px rgba(255,255,255,.22);opacity:1;pointer-events:none;user-select:none;text-shadow:0 0 34px rgba(225,25,39,.12)}
+.signature-light-sweep{position:absolute;z-index:0;inset:-30% auto -30% -48%;width:30%;transform:skewX(-19deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.035),rgba(239,28,43,.24),rgba(255,255,255,.07),transparent);filter:blur(7px);pointer-events:none;animation:glossifyLightSweep 8s ease-in-out infinite}
+.signature-reflection{position:absolute;z-index:0;inset:0;pointer-events:none;opacity:.75;background:radial-gradient(380px circle at var(--shine-x) var(--shine-y),rgba(255,255,255,.095),rgba(224,20,35,.045) 34%,transparent 72%);mix-blend-mode:screen;transition:opacity .25s}
+.footer-signature>*:not(.signature-ghost):not(.signature-light-sweep):not(.signature-reflection){position:relative;z-index:3}
+.footer-signature{isolation:isolate}
+.signature-ghost{display:block!important;visibility:visible!important}
+@keyframes glossifyLightSweep{0%,16%{left:-48%;opacity:0}28%{opacity:1}62%{left:120%;opacity:.8}63%,100%{left:120%;opacity:0}}
+@media(hover:hover) and (pointer:fine){.footer-signature{cursor:default}.footer-signature:hover .signature-reflection{opacity:1}.footer-signature:hover .signature-ghost{-webkit-text-stroke-color:rgba(237,37,50,.16);transition:-webkit-text-stroke-color .35s}}
+@media(max-width:700px){.signature-ghost{font-size:24vw;bottom:-.08em;opacity:1;-webkit-text-stroke:1.25px rgba(255,255,255,.24);color:rgba(255,255,255,.045)}.signature-light-sweep{width:42%;animation-duration:10s}.signature-reflection{opacity:.38}}
+@media(prefers-reduced-motion:reduce){.signature-light-sweep{animation:none;display:none}.signature-reflection{transition:none}}
+
+/* Footer refinements: keep all headings consistently left-aligned */
+.site-footer .signature-copy{text-align:left!important;align-items:flex-start!important}
+.site-footer .signature-copy h2{text-align:left!important;margin-left:0!important;margin-right:0!important}
+.site-footer .footer-col h3,.site-footer nav.footer-col h3{text-align:left!important}
+.site-footer:after{opacity:.34!important;filter:brightness(1.28) saturate(1.18)!important;background-image:url('footer-car-watermark.png')!important;background-position:center 55%!important;background-size:min(82vw,900px) auto!important;background-repeat:no-repeat!important}
+@media(max-width:560px){.site-footer:after{opacity:.25!important;filter:brightness(1.22) saturate(1.15)!important;background-size:96vw auto!important;background-position:center 58%!important}}
+
+</style>
+
+<style id="glossify-wash-video-section">
+.glossify-wash-film{
+ position:relative;width:100%;height:clamp(230px,36vw,500px);
+ overflow:hidden;background:#050506;isolation:isolate;
+ border-top:1px solid rgba(255,255,255,.12);
+ border-bottom:1px solid rgba(255,255,255,.12);
+}
+.glossify-wash-film video{
+ display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%;
+}
+.glossify-wash-film:after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(90deg,rgba(0,0,0,.48),transparent 55%,rgba(0,0,0,.16)),
+ linear-gradient(0deg,rgba(0,0,0,.42),transparent 45%);
+}
+.wash-film-caption{
+ position:absolute;z-index:2;left:clamp(20px,5vw,76px);bottom:clamp(18px,3vw,38px);
+ color:#fff;font-size:clamp(12px,1.3vw,17px);font-weight:850;
+ letter-spacing:.2em;text-transform:uppercase;text-shadow:0 2px 14px #000;
+}
+.wash-film-caption span{color:#ef252b}
+@media(max-width:600px){
+ .glossify-wash-film{height:250px}
+ .glossify-wash-film video{object-position:center}
+}
+@media(prefers-reduced-motion:reduce){
+ .glossify-wash-film video{visibility:hidden}
+ .glossify-wash-film{background:#090909 url('foam-wash-service.jpg') center/cover no-repeat}
+}
+</style>
+<script>
+(function(){
+ const video=document.getElementById('glossifyWashVideo');
+ if(!video) return;
+ // Start from the beginning so the washing action is visible immediately.
+ video.addEventListener('loadedmetadata',function(){
+   video.currentTime=0;
+   const playPromise=video.play();
+   if(playPromise && typeof playPromise.catch==='function') playPromise.catch(function(){});
+ });
+ video.addEventListener('ended',function(){
+   video.currentTime=0;
+   const playPromise=video.play();
+   if(playPromise && typeof playPromise.catch==='function') playPromise.catch(function(){});
+ });
+})();
+</script>
+
+
+<style id="glossify-footer-car-watermark-layer">
+#contact-footer .footer-main{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+#contact-footer .footer-car-watermark-layer{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-image:url("./footer-car-watermark.png")!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:min(96%,1450px) auto!important;
+  opacity:.34!important;
+  filter:brightness(1.12) contrast(1.08)!important;
+}
+#contact-footer .footer-main > :not(.footer-car-watermark-layer){
+  position:relative!important;
+  z-index:1!important;
+}
+@media(max-width:700px){
+  #contact-footer .footer-car-watermark-layer{
+    background-size:125% auto!important;
+    background-position:center 44%!important;
+    opacity:.25!important;
+  }
+}
+</style>
+
+
+<style id="glossify-compact-mobile-footer-preserve-content">
+@media(max-width:560px){
+  #contact-footer .footer-main{display:flex!important;flex-direction:column!important;gap:15px!important;padding:18px 16px 14px!important}
+  #contact-footer .footer-brand{display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important;padding:0!important;gap:7px!important}
+  #contact-footer .footer-logo{height:58px!important;width:auto!important;max-width:180px!important;object-fit:contain!important;margin:0 auto!important}
+  #contact-footer .footer-brand .footer-tagline{font-size:11px!important;letter-spacing:.65px!important;margin:0 0 2px!important;padding:11px 8px!important;position:relative!important;isolation:isolate!important}
+  #contact-footer .footer-brand .footer-description{display:block!important;font-size:11px!important;line-height:1.55!important;max-width:330px!important;margin:0 auto!important}
+  #contact-footer .footer-socials{display:flex!important;justify-content:center!important;gap:12px!important;margin:3px 0 1px!important}
+  #contact-footer .footer-socials a{width:31px!important;height:31px!important;display:grid!important;place-items:center!important}
+  #contact-footer .footer-col{display:block!important;width:100%!important;padding:11px 0 0!important;border-top:1px solid rgba(255,255,255,.13)!important}
+  #contact-footer .footer-col h3{font-size:13px!important;margin:0 0 8px!important}
+  #contact-footer .footer-links{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:7px 13px!important}
+  #contact-footer .footer-links a{font-size:11px!important;line-height:1.45!important}
+  #contact-footer .footer-contact{display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
+  #contact-footer .footer-contact-item{display:flex!important;align-items:center!important;gap:9px!important;min-width:0!important}
+  #contact-footer .footer-contact-item strong{font-size:11px!important;overflow-wrap:anywhere!important}
+  #contact-footer .footer-contact-item small{font-size:10px!important}
+  #contact-footer .footer-book{display:flex!important;max-width:100%!important;margin-top:10px!important;min-height:40px!important;align-items:center!important;justify-content:center!important}
+  #contact-footer .footer-bottom{display:flex!important;flex-direction:column!important;align-items:center!important;gap:7px!important;padding:12px 12px 14px!important;font-size:10px!important;line-height:1.4!important;text-align:center!important}
+  #contact-footer .footer-motto{display:block!important;font-size:10px!important}
+  #contact-footer .footer-legal{display:flex!important;gap:10px!important;justify-content:center!important;flex-wrap:wrap!important;font-size:10px!important}
+  #contact-footer .footer-car-strip{height:22px!important;opacity:.55!important}
+}
+</style>
+
+<style id="glossify-mobile-responsive">
+/* Glossify responsive mobile layout: desktop design preserved, adapted to phone width */
+@media (max-width: 760px) {
+  html, body { width:100%; max-width:100%; overflow-x:hidden; }
+  body { -webkit-text-size-adjust:100%; }
+  img, video, iframe, canvas, svg { max-width:100%; }
+  img, video { height:auto; }
+  main, section, header, footer { max-width:100%; }
+  .wrap, .container, .content, .faq-wrap, .footer-main, .footer-bottom,
+  .section-inner, .inner, .page-wrap { width: min(100% - 32px, 680px) !important; margin-left:auto !important; margin-right:auto !important; }
+  header, .top, .site-header { gap:12px; }
+  .hero { min-height: unset !important; padding:72px 18px 56px !important; background-position:center !important; }
+  .hero-content { width:100% !important; max-width:620px !important; margin:0 auto !important; padding:0 !important; }
+  .hero h1, .hero .title, .hero-content h1 { font-size:clamp(30px, 8vw, 48px) !important; line-height:1.08 !important; overflow-wrap:anywhere; }
+  .hero p, .hero-content p { font-size:15px !important; line-height:1.65 !important; }
+  .hero-ctas, .actions, .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
+  .hero-ctas .btn, .btn-row .btn { flex:1 1 145px; justify-content:center; }
+  .section, .wrap, .values, .cta, .faq-wrap { padding-top:42px !important; padding-bottom:42px !important; }
+  .section-heading, .section-head, .center { text-align:center; }
+  .section-heading h2, .section-head h2, .center-title { font-size:clamp(25px, 6vw, 36px) !important; line-height:1.15 !important; }
+  .cards, .values .cards, .faq-grid, .benefits, .services-grid, .showcase,
+  .foam-features, .reasons, .stats-grid { grid-template-columns:minmax(0,1fr) !important; }
+  .cards, .faq-grid, .showcase { gap:16px !important; }
+  .intro, .promise, .service-feature, .foam-feature, .showcase-card,
+  .service-feature-reverse { display:flex !important; flex-direction:column !important; gap:20px !important; }
+  .photo, .intro img, .foam-feature-image, .showcase-card img { width:100% !important; max-width:100% !important; }
+  .card, .faq-item, .service, .reason, .showcase-card { min-width:0 !important; }
+  .faq-question { width:100%; text-align:left; gap:12px; }
+  .footer-main { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:24px !important; }
+  .footer-col, .footer-brand { min-width:0 !important; width:100% !important; }
+  .footer-bottom { display:flex !important; flex-wrap:wrap; gap:12px; justify-content:center; text-align:center; }
+  .site-footer { overflow:hidden; }
+  .back, .btn, button, a { max-width:100%; }
+  input, select, textarea { max-width:100%; min-width:0; }
+  .auth-card { width:calc(100% - 28px) !important; max-width:440px !important; max-height:calc(100dvh - 28px); overflow:auto; }
+  .glossify-whatsapp-float { right:16px !important; bottom:18px !important; }
+}
+@media (max-width: 420px) {
+  .wrap, .container, .content, .faq-wrap, .footer-main, .footer-bottom,
+  .section-inner, .inner, .page-wrap { width:calc(100% - 28px) !important; }
+  .hero { padding:62px 14px 46px !important; }
+  .hero h1, .hero .title, .hero-content h1 { font-size:clamp(28px, 8.5vw, 36px) !important; }
+  .btn { padding:12px 16px !important; font-size:13px !important; }
+  .section, .wrap, .values, .cta, .faq-wrap { padding-top:34px !important; padding-bottom:34px !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="glossify-preloader" role="status" aria-label="Loading Glossify">
+  <div class="loader-glow"></div>
+  <img class="loader-car loader-logo" src="glossify-logo.png" alt="Glossify Car Detailing Infinity logo" />
+  <div class="loader-track"></div>
+  <div class="loader-brand">GLOSS<span>IFY</span></div>
+  <div class="loader-caption">Car Detailing Infinity</div>
+</div>
+
+<header>
+  <a class="logo" href="#home" aria-label="Glossify Car Detailing Infinity home"><img src="glossify-logo.png" alt="Glossify Car Detailing Infinity" /></a>
+  <nav id="mainNav"><a href="#home">Home</a><div class="nav-dropdown"><a class="nav-services-link" href="#services">Services</a><button class="nav-dropdown-toggle" type="button" aria-label="Show service options" aria-expanded="false">▾</button><div class="nav-dropdown-menu"><a href="#services">All Services</a><a href="service-ceramic-coating.html">Ceramic Coating</a><a href="service-clarity-coat.html">Clarity Coat</a><a href="service-paint-protection-film.html">Paint Protection Film</a><a href="service-car-wash.html">Car Wash</a><a href="service-glass-film.html">Glass Film</a><a href="service-foam-wash.html">Foam Wash</a><a href="service-dry-cleaning.html">Dry Cleaning</a><a href="service-rubbing.html">Rubbing</a></div></div><a href="about.html">About</a><a href="#gallery">Gallery</a><a href="#my-bookings" id="myBookingsNav">My Bookings</a><a href="#contact-footer">Contact</a><a href="#booking" class="mobile-auth">Login</a><a href="#booking" class="mobile-auth">Sign Up</a></nav>
+  <div class="actions"><button class="btn btn-outline" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Login</button><button class="btn btn-red" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Sign Up</button><button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">☰</button></div>
+</header>
+
+<div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+ <div class="auth-card">
+  <button class="auth-close" id="authClose" type="button" aria-label="Close sign up" title="Close">×</button>
+  <div class="auth-brand">GLOSSIFY<small>CAR DETAILING INFINITY</small></div>
+  <div class="auth-kicker">YOUR CAR, OUR CARE</div>
+  <h2 id="authTitle">Create your account</h2>
+  <p class="auth-sub" id="authSub">Sign up to book your car detailing service.</p>
+  <form id="signupForm" class="auth-form">
+   <label>Full name<input id="signupName" autocomplete="name" placeholder="Your full name" required></label>
+   <label>Email address<input id="signupEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+   <label>Mobile number<input id="signupPhone" type="tel" autocomplete="tel" placeholder="Your contact number" maxlength="20" required></label>
+   <label>Password<input id="signupPassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required></label>
+   <button class="btn btn-red auth-submit" type="submit">Create Account</button>
+  </form>
+  <form id="loginForm" class="auth-form" hidden>
+   <label>Email address<input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+   <label>Password<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password" required></label>
+   <button class="btn btn-red auth-submit" type="submit">Login &amp; Continue</button>
+  </form>
+  <div class="auth-message" id="authMessage" role="status"></div>
+  <p class="auth-switch" id="authSwitch">Already have an account? <button type="button" id="showLogin">Login</button></p>
+  <p class="auth-demo-note">Your account is securely managed by Glossify.</p>
+ </div>
+</div>
+
+<section class="hero" id="home" aria-label="Glossify detailing services carousel">
+ <div class="hero-slides" aria-hidden="true">
+  <div class="hero-slide active" data-caption="Premium foam wash" style="background-image:url('hero-scene-1.jpg')"></div>
+  <div class="hero-slide" data-caption="Professional paint correction" style="background-image:url('hero-scene-2.jpg')"></div>
+  <div class="hero-slide" data-caption="Interior deep cleaning" style="background-image:url('hero-scene-3.jpg')"></div>
+  <div class="hero-slide" data-caption="Glossy finish & protection" style="background-image:url('hero-scene-4.jpg')"></div>
+ </div>
+ <div class="carousel-dots" id="heroDots" aria-label="Choose banner slide"></div>
+ <div class="carousel-caption"><span class="caption-line"></span><span id="heroCaption">Premium foam wash</span></div>
+ <div class="hero-content">
+  <div class="eyebrow">Premium car detailing</div>
+  <h1>CLEAN.<br><em class="shine-word">SHINE.</em><br>PROTECT.</h1>
+  <p>Precision detailing for a showroom finish. Bring back the deep gloss, freshness and protection your car deserves.</p>
+  <div class="hero-ctas"><button class="btn btn-red" onclick="document.querySelector('#booking').scrollIntoView({behavior:'smooth'})">Book Your Service&nbsp; ↗</button><a class="btn btn-ghost" href="#services">Explore Services&nbsp; →</a></div>
+ </div>
+</section>
+<section class="trust-strip" aria-label="Why Glossify"><div><b>✦</b><span><strong>Premium Quality</strong><small>Top-grade products</small></span></div><div><b>♟</b><span><strong>Expert Detailers</strong><small>Care in every detail</small></span></div><div><b>◉</b><span><strong>Lasting Protection</strong><small>Shine that stays</small></span></div><div><b>◷</b><span><strong>Easy Booking</strong><small>Your time, your choice</small></span></div></section>
+<section class="foam-feature scroll-reveal" id="foam-wash-feature" aria-label="Our Services Foam Wash">
+ <div class="foam-feature-copy">
+  <div class="foam-feature-kicker">Our Services</div>
+  <h2>Foam <span>Wash</span></h2>
+  <p class="foam-subtitle">Deep clean. Brighter shine. Healthier car.</p>
+  <p class="foam-description">Give your car the care it deserves with Glossify’s premium foam wash. Rich, paint-safe foam helps loosen dust, road grime and everyday dirt before a careful rinse, leaving your vehicle looking fresher, cleaner and beautifully glossy—without compromising its finish.</p>
+  <div class="foam-feature-points"><span><b>✦</b> Deep Cleaning</span><span><b>✦</b> Paint-Safe Care</span><span><b>✦</b> Fresh Shine</span></div>
+  <a class="foam-feature-cta" href="service-foam-wash.html">Explore Foam Wash <span aria-hidden="true">→</span></a>
+ </div>
+ <div class="foam-feature-image"><img src="foam-wash-service.jpg" alt="Luxury car covered in rich foam during a professional foam wash" loading="lazy"></div>
+</section>
+<section class="foam-feature scroll-reveal service-feature-reverse" id="dry-cleaning-feature" aria-label="Our Services Dry Cleaning">
+ <div class="foam-feature-image"><img src="dry-cleaning-service.jpg" alt="Professional interior dry cleaning for a luxury car" loading="lazy"></div>
+ <div class="foam-feature-copy">
+  <div class="foam-feature-kicker">Interior Revival</div>
+  <h2>Dry <span>Cleaning</span></h2>
+  <p class="foam-subtitle">A fresher cabin. A better drive.</p>
+  <p class="foam-description">Bring the comfort back to your car’s interior. Our detailed dry-cleaning service focuses on seats, carpets and high-touch surfaces, lifting everyday dust and grime for a cleaner, more inviting cabin.</p>
+  <div class="foam-feature-points"><span><b>✦</b> Interior Refresh</span><span><b>✦</b> Detail-Focused Care</span><span><b>✦</b> Cleaner Cabin</span></div>
+  <a class="foam-feature-cta" href="service-dry-cleaning.html">Explore Dry Cleaning <span aria-hidden="true">→</span></a>
+ </div>
+</section>
+<section class="foam-feature scroll-reveal" id="rubbing-feature" aria-label="Our Services Rubbing">
+ <div class="foam-feature-copy">
+  <div class="foam-feature-kicker">Paint Correction</div>
+  <h2>Rubbing <span>&amp; Polish</span></h2>
+  <p class="foam-subtitle">Restore depth. Reveal the gloss.</p>
+  <p class="foam-description">Refresh your paintwork with professional rubbing and polishing designed to improve surface clarity and revive its shine. We give attention to the finish, helping your car look smoother, richer and ready to turn heads.</p>
+  <div class="foam-feature-points"><span><b>✦</b> Gloss Revival</span><span><b>✦</b> Paintwork Care</span><span><b>✦</b> Refined Finish</span></div>
+  <a class="foam-feature-cta" href="service-rubbing.html">Explore Rubbing <span aria-hidden="true">→</span></a>
+ </div>
+ <div class="foam-feature-image"><img src="hero-scene-3.jpg" alt="Professional polishing to bring out a car's paint gloss" loading="lazy"></div>
+</section>
+<section class="foam-feature scroll-reveal service-feature-reverse" id="ceramic-coating-feature" aria-label="Our Services Ceramic Coating">
+ <div class="foam-feature-image"><img src="ceramic-coating-service.jpg" alt="Premium ceramic coating finish on a detailed car" loading="lazy"></div>
+ <div class="foam-feature-copy">
+  <div class="foam-feature-kicker">Long-Lasting Protection</div>
+  <h2>Ceramic <span>Coating</span></h2>
+  <p class="foam-subtitle">A slick finish. A lasting impression.</p>
+  <p class="foam-description">Give your vehicle a premium finish with ceramic coating. This protective layer adds a deep, glossy look and helps water and everyday grime release more easily, making routine maintenance simpler while keeping your car looking its best.</p>
+  <div class="foam-feature-points"><span><b>✦</b> Deep Gloss</span><span><b>✦</b> Water Beading</span><span><b>✦</b> Easier Maintenance</span></div>
+  <a class="foam-feature-cta" href="service-ceramic-coating.html">Explore Ceramic Coating <span aria-hidden="true">→</span></a>
+ </div>
+</section>
+<section class="brand-story" id="about-glossify" aria-label="About Glossify">
+ <div class="brand-story-visual"><img src="hero-scene-4.jpg" alt="Glossify professional car detailing and paint protection" loading="lazy"></div>
+ <div class="brand-story-copy">
+  <h2>“Detailing is not a skill,<br> it’s an <span>attitude!</span>”</h2>
+  <p>Welcome to <strong>Glossify</strong> — your destination for premium car care. We believe in perfection in every detail. Our focus is to make ordinary-looking cars look their best with careful workmanship, quality products and a passion for automotive detailing.</p>
+  <p>From interior cleaning and foam washing to <strong>Rubbing, Ceramic Coating, Clarity Coat and Paint Protection Film</strong>, our services can be tailored to your vehicle’s needs.</p>
+  <div class="brand-story-actions"><a href="mailto:glossifycar@gmail.com?subject=Enquiry%20about%20Glossify%20Car%20Services">Know More&nbsp; →</a></div>
+ </div>
+</section>
+<section class="showcase" id="gallery"><div class="section-heading"><span>THE GLOSSIFY EXPERIENCE</span><h2>Care that turns heads<span>.</span></h2><p>From deep-clean foam to mirror-like paintwork, every detail gets our full attention.</p></div><div class="showcase-six-icons clickable-service-strip">
+ <img src="glossify-six-services.png" alt="Five Glossify services: Ceramic Coating, Clarity Coat, Paint Protection Film, Car Wash and Glass Film">
+ <a class="service-hotspot" style="--i:0" href="service-ceramic-coating.html" aria-label="Open Ceramic Coating service"></a>
+ <a class="service-hotspot" style="--i:1" href="service-clarity-coat.html" aria-label="Open Clarity Coat service"></a>
+ <a class="service-hotspot" style="--i:2" href="service-paint-protection-film.html" aria-label="Open Paint Protection Film service"></a>
+ <a class="service-hotspot" style="--i:3" href="service-car-wash.html" aria-label="Open Car Wash service"></a>
+ <a class="service-hotspot" style="--i:4" href="service-glass-film.html" aria-label="Open Glass Film service"></a>
+</div></section>
+<section class="showcase dedicated-services" id="services"><div class="section-heading"><span>OUR SERVICES</span><h2>Choose Your <span>Service</span></h2><p>Explore each service to learn what is included and request your booking.</p></div><div class="showcase-grid service-detail-grid">
+ <a class="showcase-card" href="service-rubbing.html"><img loading="lazy" src="rubbing-service.jpg" alt="Machine polishing and rubbing car paint"><div><small>PAINT FINISH</small><h3>Rubbing</h3><span>Restore gloss and smooth paintwork →</span></div></a>
+ <a class="showcase-card" href="service-dry-cleaning.html"><img loading="lazy" src="dry-cleaning-service.jpg" alt="Vacuum deep cleaning car seats and interior"><div><small>INTERIOR CARE</small><h3>Dry Cleaning</h3><span>Refresh seats and interior surfaces →</span></div></a>
+ <a class="showcase-card" href="service-foam-wash.html"><img loading="lazy" src="foam-wash-service.jpg" alt="Car covered in rich foam during a foam wash"><div><small>EXTERIOR CLEAN</small><h3>Foam Wash</h3><span>Gentle, thorough exterior wash →</span></div></a>
+ <a class="showcase-card" href="service-ceramic-coating.html"><img loading="lazy" src="ceramic-coating-service.jpg" alt="Applying ceramic coating to glossy car paint"><div><small>PAINT PROTECTION</small><h3>Ceramic Coating</h3><span>Long-lasting gloss and protection →</span></div></a>
+</div></section>
+
+<section class="my-bookings-section" id="my-bookings">
+ <div class="my-bookings-panel">
+  <div class="my-bookings-heading">
+   <div><h2>My Bookings</h2><p>Track your appointments and the latest booking status.</p></div>
+   <div class="my-bookings-actions">
+    <button class="my-bookings-btn" type="button" id="refreshMyBookings">Refresh</button>
+    <button class="my-bookings-btn primary" type="button" id="bookAnotherService">Book a Service</button>
+   </div>
+  </div>
+  <div id="myBookingsMessage" class="my-bookings-message">Login to view your bookings.</div>
+  <div id="myBookingsList" class="my-bookings-list" hidden></div>
+ </div>
+</section>
+<main id="booking">
+ <div class="booking-shell">
+  <section>
+   <h2 class="form-title">Book a Car Detailing Service</h2>
+   <p class="sub">Fill in your details to schedule your service</p>
+   <form id="bookingForm">
+    <div class="fields">
+     <div class="field"><label for="first">First Name <span class="required">*</span></label><input id="first" name="first" placeholder="Enter first name" required></div>
+     <div class="field"><label for="last">Last Name <span class="required">*</span></label><input id="last" name="last" placeholder="Enter last name" required></div>
+     <div class="field"><label for="car">Car Name <span class="required">*</span></label><input id="car" name="car" placeholder="e.g. Hyundai Creta" required></div>
+     <div class="field"><label for="segment">Car Segment <span class="required">*</span></label><select id="segment" name="segment" required><option value="">Select Segment</option><option>Hatchback</option><option>Sedan</option><option>SUV</option><option>MUV / MPV</option><option>Luxury</option><option>Sports Car</option></select></div>
+    </div>
+    <div class="section" id="booking-services">
+     <span class="section-label">Service Type <span class="required">*</span></span>
+     <div class="services">
+      <button class="service selected" type="button" data-service="Rubbing"><span class="ico">✧</span><strong>Rubbing</strong><small>Paint shine</small></button>
+      <button class="service" type="button" data-service="Drycleaning"><span class="ico">♧</span><strong>Drycleaning</strong><small>Interior care</small></button>
+      <button class="service" type="button" data-service="Foam Wash"><span class="ico">♨</span><strong>Foam Wash</strong><small>Deep exterior wash</small></button>
+      <button class="service" type="button" data-service="Ceramic Coating"><span class="ico">⬡</span><strong>Ceramic Coating</strong><small>Long-lasting protection</small></button>
+     </div>
+    </div>
+    <div class="section">
+     <span class="section-label">Select Date &amp; Time <span class="required">*</span></span>
+     <div class="schedule">
+      <div class="calendar">
+       <div class="cal-head"><button type="button" id="prev" aria-label="Previous month">‹</button><strong id="monthLabel"></strong><button type="button" id="next" aria-label="Next month">›</button></div>
+       <div class="days"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+       <div class="dates" id="dates"></div>
+      </div>
+      <div class="timebox">
+       <div class="time-title"><span>◷</span> Select Time</div>
+       <div class="times" id="times"></div>
+       <p class="note">Choose an available appointment slot.</p>
+      </div>
+     </div>
+    </div>
+    <button class="btn btn-red confirm" type="submit">Confirm Booking</button>
+    <div class="success" id="success" role="status"></div>
+   </form>
+  </section>
+  <aside class="aside" id="why">
+   <h3>Why Choose Us?</h3>
+   <div class="reason"><div class="round">♙</div><div><strong>Expert Car Care</strong><p>Trained professionals for the best results</p></div></div>
+   <div class="reason"><div class="round">♧</div><div><strong>High-Quality Products</strong><p>Safe and premium detailing products</p></div></div>
+   <div class="reason"><div class="round">▦</div><div><strong>Convenient Booking</strong><p>Easy online scheduling</p></div></div>
+   <div class="reason"><div class="round">✓</div><div><strong>Customized Services</strong><p>Care tailored for every car and every need</p></div></div>
+   <hr>
+   <h3>Our Services</h3>
+   <div class="mini-grid">
+    <a class="mini" href="service-rubbing.html"><img loading="lazy" src="rubbing-service.jpg" alt="Professional car paint polishing"><strong>Rubbing</strong></a>
+    <a class="mini" href="service-dry-cleaning.html"><img loading="lazy" src="dry-cleaning-service.jpg" alt="Professional car interior dry cleaning"><strong>Dry Cleaning</strong></a>
+    <a class="mini" href="service-foam-wash.html"><img loading="lazy" src="foam-wash-service.jpg" alt="Luxury car foam wash"><strong>Foam Wash</strong></a>
+    <a class="mini" href="service-ceramic-coating.html"><img loading="lazy" src="ceramic-coating-service.jpg" alt="Glossy car after ceramic coating"><strong>Ceramic Coating</strong></a>
+   </div>
+  </aside>
+ </div>
+</main>
+<footer class="site-footer" id="contact-footer">
+ <div class="footer-top-accent" aria-hidden="true"></div>
+
+ <section class="glossify-wash-film" aria-label="Professional car washing video">
+  <video id="glossifyWashVideo" autoplay muted playsinline preload="metadata" poster="foam-wash-service.jpg">
+   <source src="https://videos.pexels.com/video-files/6157968/6157968-hd_1920_1080_30fps.mp4" type="video/mp4">
+  </video>
+  <div class="wash-film-caption"><span>THE GLOSSIFY</span> WASH PROCESS</div>
+ </section>
+ <section class="footer-signature" aria-label="Book your Glossify detailing experience">
+  <div class="signature-ghost" aria-hidden="true">GLOSSIFY</div>
+  <div class="signature-light-sweep" aria-hidden="true"></div>
+  <div class="signature-reflection" aria-hidden="true"></div>
+  <div class="signature-kicker"><span class="signature-pulse"></span> THE GLOSSIFY EXPERIENCE <span class="signature-line"></span> EST. FOR THE OBSESSED</div>
+  <div class="signature-content">
+   <div class="signature-copy">
+    <p class="signature-eyebrow">YOUR CAR. ITS BEST VERSION.</p>
+    <h2>MAKE EVERY<br><span>ARRIVAL</span> A STATEMENT.</h2>
+    <p>Precision detailing. Unmistakable finish. The kind of shine that turns heads before you do.</p>
+   </div>
+   <a class="signature-cta" href="#booking"><span class="cta-small">READY FOR THE GLOSS?</span><strong>BOOK YOUR DETAIL</strong><span class="cta-arrow">↗</span></a>
+  </div>
+  <div class="signature-bottom"><span>01 / CLEAN</span><span>02 / PROTECT</span><span>03 / SHINE</span><span class="signature-note">DETAILS MAKE THE DIFFERENCE.</span></div>
+ </section>
+ <div class="footer-main">
+  <div class="footer-car-watermark-layer" aria-hidden="true"></div>
+  <section class="footer-brand" aria-label="About Glossify">
+   <img class="footer-logo" src="glossify-logo.png" alt="Glossify Car Detailing Infinity logo">
+   <p class="footer-tagline">Drive Clean <span>|</span> Look Sharp <span>|</span> Feel Premium</p>
+   <p class="footer-description">Glossify Car Detailing brings professional car care services right to your doorstep. From foam wash to full car detailing, we make your car look brand new — inside and out.</p>
+   <div class="footer-socials" aria-label="Social links"><a href="https://www.instagram.com/glossifycardetailinginfinity/" target="_blank" rel="noopener noreferrer" aria-label="Glossify on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.7" cy="6.5" r="1" class="icon-fill"/></svg></a><a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" class="social-facebook"><path d="M14.2 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H8v3.1h2.8v8z"/></svg></a><a href="https://www.youtube.com/" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" class="social-youtube"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 8.5 16 12l-6 3.5z" class="youtube-play"/></svg></a><a href="https://wa.me/918448240495" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3 20l1.2-4.9a8.2 8.2 0 1 1 16-3.4Z"/><path d="M8.4 7.8c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .6.4.7 1.1 1.4 1.9 1.8.2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .4-.2 1.2-.7 1.6-.5.5-1.2.7-1.9.6-1-.2-2.3-.8-3.7-2.1-1.2-1.1-2-2.5-2.2-3.4-.2-.9.1-1.7.7-2.4Z"/></svg></a></div>
+  </section>
+  <nav class="footer-col" aria-label="Quick links"><h3>Quick <span>Links</span></h3><div class="footer-links"><a href="#home">Home</a><a href="about.html">About Us</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#testimonials">Testimonials</a><a href="faq.html">FAQs</a><a href="#contact-footer">Contact Us</a></div></nav>
+  <section class="footer-col"><h3>Our <span>Services</span></h3><div class="footer-links footer-services"><a href="service-foam-wash.html">Foam Wash</a><a href="service-dry-cleaning.html">Dry Cleaning</a><a href="service-rubbing.html">Rubbing</a><a href="service-ceramic-coating.html">Ceramic Coating</a></div></section>
+  <section class="footer-col"><h3>Contact <span>Us</span></h3><div class="footer-contact">
+   <div class="footer-contact-item"><span class="footer-contact-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h3l1.4 4-2 1.6a15 15 0 0 0 6 6l1.6-2 4 1.4v3c0 1-.8 1.8-1.8 1.8A15.7 15.7 0 0 1 4.7 5.3c0-1 .8-1.8 1.8-1.8Z"/></svg></span><div><strong>+91 84482 40495</strong><small>Call / WhatsApp</small></div></div>
+   <div class="footer-contact-item"><span class="footer-contact-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span><div><strong>info@glossifycardetailing.com</strong><small>Drop us an email</small></div></div>
+   <div class="footer-contact-item"><span class="footer-contact-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.3"/></svg></span><div><strong>Ghaziabad, Uttar Pradesh</strong><small>Service at your doorstep</small></div></div>
+  </div><a class="footer-book" href="#booking"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M3.5 10h17"/></svg><b>BOOK NOW</b><span>⟶</span></a></section>
+ </div>
+ <div class="footer-bottom"><span>© 2026 Glossify Car Detailing. All rights reserved.</span><span class="footer-motto">— &nbsp; Your Car <em>Our Priority</em> &nbsp; —</span><div class="footer-legal"><a href="#privacy">Privacy Policy</a><a href="#terms">Terms &amp; Conditions</a><a href="#sitemap">Sitemap</a></div></div>
+ <div class="footer-car-strip" aria-hidden="true"></div>
+</footer>
+<script src="api-config.js"></script>
+<script>
+
+// Production authentication: all customer accounts and bookings are stored by the backend in MongoDB Atlas.
+const API_BASE = window.GLOSSIFY_API_BASE || 'http://localhost:5000';
+const authOverlay=document.getElementById('authOverlay'), signupForm=document.getElementById('signupForm'), loginForm=document.getElementById('loginForm');
+const authTitle=document.getElementById('authTitle'), authSub=document.getElementById('authSub'), authSwitch=document.getElementById('authSwitch'), authMessage=document.getElementById('authMessage');
+const tokenKey='glossifyAuthToken', userKey='glossifyAuthUser';
+const getToken=()=>localStorage.getItem(tokenKey)||null;
+const getUser=()=>{try{return JSON.parse(localStorage.getItem(userKey)||'null')}catch{return null}};
+async function api(path, options={}) {
+ const headers={'Content-Type':'application/json', ...(options.headers||{})};
+ if(getToken()) headers.Authorization='Bearer '+getToken();
+ const response=await fetch(API_BASE+path,{...options,headers});
+ const data=await response.json().catch(()=>({message:'Unexpected server response.'}));
+ if(!response.ok) throw new Error(data.message||'Request failed.'); return data;
+}
+function saveSession(data){localStorage.setItem(tokenKey,data.token);localStorage.setItem(userKey,JSON.stringify(data.user));}
+function clearSession(){localStorage.removeItem(tokenKey);localStorage.removeItem(userKey);}
+function authMsg(message,ok=false){authMessage.textContent=message;authMessage.className='auth-message show'+(ok?' ok':'')}
+function openAuth(mode){authOverlay.hidden=false;document.body.classList.add('auth-locked');setAuthMode(mode)}
+function closeAuth(){authOverlay.hidden=true;document.body.classList.remove('auth-locked');sessionStorage.setItem('glossifyAuthDismissed','yes')}
+function setAuthMode(mode){authMessage.className='auth-message';const signup=mode==='signup';signupForm.hidden=!signup;loginForm.hidden=signup;authTitle.textContent=signup?'Create your account':'Welcome back';authSub.textContent=signup?'Create an account to book your car detailing service.':'Login to continue to your bookings.';authSwitch.innerHTML=signup?'Already have an account? <button type="button" id="showLogin">Login</button>':'New to Glossify? <button type="button" id="showSignup">Create account</button>';document.getElementById(signup?'showLogin':'showSignup').addEventListener('click',()=>setAuthMode(signup?'login':'signup'))}
+function refreshAuthButtons(){const logged=!!getToken();document.querySelectorAll('.actions .btn-outline').forEach(b=>b.textContent=logged?'Logout':'Login');document.querySelectorAll('.actions .btn-red').forEach(b=>{if(b.closest('.actions'))b.textContent=logged?'My Account':'Sign Up'})}
+function prefillUser(user){const parts=(user?.name||'').trim().split(/\s+/);document.getElementById('first').value=parts[0]||'';document.getElementById('last').value=parts.slice(1).join(' ')}
+function formatBookingDate(value){
+ const d=new Date(String(value||'')+'T12:00:00');
+ return Number.isNaN(d.getTime()) ? String(value||'—') : d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+}
+function setMyBookingsMessage(message){
+ const box=document.getElementById('myBookingsMessage');
+ box.textContent=message;box.hidden=false;
+ document.getElementById('myBookingsList').hidden=true;
+}
+async function loadMyBookings(){
+ const list=document.getElementById('myBookingsList');
+ if(!getToken()){setMyBookingsMessage('Please log in to see your bookings.');return;}
+ setMyBookingsMessage('Loading your bookings…');
+ try{
+  const data=await api('/api/bookings/mine');
+  const bookings=Array.isArray(data.bookings)?data.bookings:[];
+  list.replaceChildren();
+  if(!bookings.length){setMyBookingsMessage('You have no bookings yet. Book your first car detailing service above.');return;}
+  bookings.forEach(booking=>{
+   const card=document.createElement('article');card.className='my-booking-card';
+   const top=document.createElement('div');top.className='my-booking-top';
+   const service=document.createElement('div');service.className='my-booking-service';service.textContent=booking.service||'Car detailing';
+   const status=document.createElement('span');status.className='my-booking-status '+String(booking.status||'Pending').toLowerCase();status.textContent=booking.status||'Pending';
+   top.append(service,status);card.append(top);
+   const details=document.createElement('div');details.className='my-booking-details';
+   const rows=[
+    ['Appointment',formatBookingDate(booking.appointmentDate)],
+    ['Time',booking.appointmentTime||'—'],
+    ['Vehicle',`${booking.car||'—'}${booking.segment?' · '+booking.segment:''}`],
+    ['Booked on',booking.createdAt?new Date(booking.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—']
+   ];
+   rows.forEach(([label,value])=>{
+    const cell=document.createElement('div');cell.className='my-booking-detail';
+    const small=document.createElement('small');small.textContent=label;
+    const strong=document.createElement('strong');strong.textContent=value;
+    cell.append(small,strong);details.append(cell);
+   });
+   card.append(details);
+   const ref=document.createElement('div');ref.className='my-booking-reference';ref.textContent='Booking ID: '+String(booking._id||booking.id||'—');
+   card.append(ref);list.append(card);
+  });
+  document.getElementById('myBookingsMessage').hidden=true;list.hidden=false;
+ }catch(error){setMyBookingsMessage(error.message||'Could not load your bookings. Please try again.');}
+}
+document.getElementById('refreshMyBookings').addEventListener('click',loadMyBookings);
+document.getElementById('myBookingsNav').addEventListener('click',()=>{if(!getToken()){openAuth('login');return;}loadMyBookings();});
+document.getElementById('bookAnotherService').addEventListener('click',()=>document.querySelector('#booking').scrollIntoView({behavior:'smooth'}));
+
+signupForm.addEventListener('submit',async e=>{e.preventDefault();const account={name:document.getElementById('signupName').value.trim(),email:document.getElementById('signupEmail').value.trim().toLowerCase(),phone:document.getElementById('signupPhone').value.trim(),password:document.getElementById('signupPassword').value};authMsg('Creating your secure account…');try{const data=await api('/api/auth/signup',{method:'POST',body:JSON.stringify(account)});saveSession(data);closeAuth();refreshAuthButtons();prefillUser(data.user);loadMyBookings()}catch(err){authMsg(err.message)}});
+loginForm.addEventListener('submit',async e=>{e.preventDefault();const credentials={email:document.getElementById('loginEmail').value.trim().toLowerCase(),password:document.getElementById('loginPassword').value};authMsg('Signing in…');try{const data=await api('/api/auth/login',{method:'POST',body:JSON.stringify(credentials)});if(data.user.role==='admin')throw new Error('Please use the Glossify Admin Dashboard to sign in.');saveSession(data);closeAuth();refreshAuthButtons();prefillUser(data.user);loadMyBookings()}catch(err){authMsg(err.message)}});
+document.getElementById('authClose').addEventListener('click',closeAuth);
+authOverlay.addEventListener('click',e=>{if(e.target===authOverlay)closeAuth()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!authOverlay.hidden)closeAuth()});
+document.querySelectorAll('.actions .btn-outline').forEach(b=>b.addEventListener('click',()=>{if(getToken()){clearSession();refreshAuthButtons();openAuth('login')}else openAuth('login')}));
+document.querySelectorAll('.actions .btn-red').forEach(b=>{if(b.closest('.actions'))b.addEventListener('click',()=>{if(getToken()){document.querySelector('#booking').scrollIntoView({behavior:'smooth'})}else openAuth('signup')})});
+document.querySelector('.hero-content .btn-red').addEventListener('click',e=>{if(!getToken()){e.stopImmediatePropagation();openAuth('signup')}});
+async function restoreSession(){if(!getToken())return false;try{const data=await api('/api/auth/me');localStorage.setItem(userKey,JSON.stringify(data.user));refreshAuthButtons();prefillUser(data.user);closeAuth();loadMyBookings();return true}catch{clearSession();refreshAuthButtons();return false}}
+refreshAuthButtons();restoreSession().then(valid=>{if(!valid&&sessionStorage.getItem('glossifyAuthDismissed')!=='yes')openAuth('signup')});
+
+const heroSlides=[...document.querySelectorAll('.hero-slide')],heroDots=document.getElementById('heroDots'),heroCaption=document.getElementById('heroCaption');let heroIndex=0,heroTimer;
+heroSlides.forEach((slide,i)=>{const dot=document.createElement('button');dot.type='button';dot.className='carousel-dot'+(i===0?' active':'');dot.setAttribute('aria-label','Show banner '+(i+1));dot.addEventListener('click',()=>showHeroSlide(i,true));heroDots.appendChild(dot)});
+function showHeroSlide(index,resetTimer=false){heroIndex=(index+heroSlides.length)%heroSlides.length;heroSlides.forEach((slide,i)=>slide.classList.toggle('active',i===heroIndex));[...heroDots.children].forEach((dot,i)=>{dot.classList.toggle('active',i===heroIndex);dot.setAttribute('aria-current',i===heroIndex?'true':'false')});heroCaption.textContent=heroSlides[heroIndex].dataset.caption;if(resetTimer){clearInterval(heroTimer);startHeroTimer()}}
+function startHeroTimer(){if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)heroTimer=setInterval(()=>showHeroSlide(heroIndex+1),5000)}
+showHeroSlide(0);startHeroTimer();
+const menuToggle=document.getElementById('menuToggle'), mainNav=document.getElementById('mainNav');
+ document.querySelectorAll('.nav-dropdown-toggle').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();const box=btn.closest('.nav-dropdown');const opened=box.classList.toggle('open');btn.setAttribute('aria-expanded',String(opened));}));
+
+menuToggle.addEventListener('click',()=>{const isOpen=mainNav.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(isOpen));menuToggle.setAttribute('aria-label',isOpen?'Close navigation menu':'Open navigation menu');menuToggle.textContent=isOpen?'✕':'☰'});
+mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mainNav.classList.remove('open');mainNav.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));mainNav.querySelectorAll('.nav-dropdown-toggle').forEach(b=>b.setAttribute('aria-expanded','false'));menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','Open navigation menu');menuToggle.textContent='☰'}));
+const serviceButtons=[...document.querySelectorAll('.service')];let selectedService='Rubbing', selectedDate='', selectedTime='';
+serviceButtons.forEach(b=>b.addEventListener('click',()=>{serviceButtons.forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedService=b.dataset.service;document.getElementById('success').classList.remove('show')}));
+const times=['09:00 AM','10:00 AM','11:00 AM','12:00 PM','01:00 PM','02:00 PM','03:00 PM','04:00 PM','05:00 PM','06:00 PM'];
+const timesEl=document.getElementById('times');
+times.forEach(t=>{const b=document.createElement('button');b.type='button';b.className='time';b.textContent=t;b.addEventListener('click',()=>{document.querySelectorAll('.time').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedTime=t;document.getElementById('success').classList.remove('show')});timesEl.appendChild(b)});
+let shown=new Date();shown.setDate(1);const today=new Date();today.setHours(0,0,0,0);
+function renderCalendar(){const y=shown.getFullYear(),m=shown.getMonth();document.getElementById('monthLabel').textContent=shown.toLocaleDateString('en-US',{month:'long',year:'numeric'});const root=document.getElementById('dates');root.innerHTML='';const offset=new Date(y,m,1).getDay(),count=new Date(y,m+1,0).getDate();for(let i=0;i<offset;i++){const blank=document.createElement('span');root.appendChild(blank)}for(let d=1;d<=count;d++){const date=new Date(y,m,d),b=document.createElement('button');b.type='button';b.className='date';b.textContent=d;b.disabled=date<today;b.setAttribute('aria-label',date.toDateString());if(selectedDate===`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`)b.classList.add('active');b.addEventListener('click',()=>{selectedDate=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;renderCalendar();document.getElementById('success').classList.remove('show')});root.appendChild(b)}}
+document.getElementById('prev').addEventListener('click',()=>{shown=new Date(shown.getFullYear(),shown.getMonth()-1,1);renderCalendar()});
+document.getElementById('next').addEventListener('click',()=>{shown=new Date(shown.getFullYear(),shown.getMonth()+1,1);renderCalendar()});renderCalendar();
+document.getElementById('bookingForm').addEventListener('submit',async e=>{e.preventDefault();if(!getToken()){openAuth('login');return}const f=new FormData(e.target);if(!selectedDate||!selectedTime){alert('Please select both an appointment date and time.');return}const payload={first:f.get('first'),last:f.get('last'),car:f.get('car'),segment:f.get('segment'),service:selectedService,appointmentDate:selectedDate,appointmentTime:selectedTime};const msg=document.getElementById('success');msg.textContent='Submitting your booking…';msg.classList.add('show');try{const data=await api('/api/bookings',{method:'POST',body:JSON.stringify(payload)});const dateText=new Date(selectedDate+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});msg.innerHTML=`<strong>Booking request submitted!</strong><br>${payload.first} ${payload.last} · ${payload.car} (${payload.segment})<br>Service: ${payload.service}<br>Appointment: ${dateText} at ${payload.appointmentTime}<br><small>Reference: ${data.booking.id} · Status: ${data.booking.status}</small>`;msg.scrollIntoView({behavior:'smooth',block:'nearest'});loadMyBookings()}catch(err){msg.textContent=err.message+' Please try again or contact Glossify.'}});
+</script>
+
+<!-- Glossify floating WhatsApp button -->
+<style>
+.glossify-whatsapp-float{position:fixed;left:22px;bottom:22px;width:60px;height:60px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;box-shadow:0 5px 22px rgba(0,0,0,.35);text-decoration:none;transition:transform .22s ease,box-shadow .22s ease;animation:glossify-wa-pulse 2.4s infinite;}
+.glossify-whatsapp-float:hover,.glossify-whatsapp-float:focus-visible{transform:scale(1.09);box-shadow:0 7px 28px rgba(37,211,102,.45);outline:2px solid #fff;outline-offset:3px}
+.glossify-whatsapp-float svg{width:33px;height:33px;fill:currentColor}
+@keyframes glossify-wa-pulse{0%,100%{box-shadow:0 5px 22px rgba(0,0,0,.35),0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 5px 22px rgba(0,0,0,.35),0 0 0 9px rgba(37,211,102,0)}}
+@media(max-width:600px){.glossify-whatsapp-float{width:54px;height:54px;left:15px;bottom:15px}.glossify-whatsapp-float svg{width:29px;height:29px}}
+@media(prefers-reduced-motion:reduce){.glossify-whatsapp-float{animation:none;transition:none}}
+</style>
+<a class="glossify-whatsapp-float" href="https://wa.me/918448240495?text=Hi%20Glossify%2C%20I%20want%20to%20know%20about%20your%20car%20detailing%20services." target="_blank" rel="noopener noreferrer" aria-label="Chat with Glossify on WhatsApp">
+<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C8.9 3 3.1 8.78 3.1 15.9c0 2.28.6 4.5 1.75 6.47L3 29l6.82-1.79a12.98 12.98 0 0 0 6.2 1.58h.01c7.13 0 12.93-5.79 12.93-12.9A12.8 12.8 0 0 0 25.16 6.7 12.85 12.85 0 0 0 16.04 3Zm-.01 23.6h-.01a10.75 10.75 0 0 1-5.48-1.5l-.39-.23-4.05 1.06 1.08-3.94-.25-.4a10.66 10.66 0 0 1-1.64-5.69c0-5.91 4.82-10.72 10.75-10.72 2.87 0 5.57 1.12 7.6 3.15a10.65 10.65 0 0 1 3.14 7.59c0 5.91-4.82 10.68-10.75 10.68Zm5.9-8.02c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.21.32-.83 1.05-1.02 1.27-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.85-1.61-1.9-1.8-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.57.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.73-1.75-1-2.4-.26-.63-.53-.55-.73-.56l-.62-.01c-.21 0-.56.08-.86.4-.3.32-1.13 1.1-1.13 2.68s1.16 3.11 1.32 3.33c.16.21 2.28 3.48 5.53 4.88.77.33 1.37.53 1.84.68.77.24 1.47.21 2.02.13.62-.09 1.9-.78 2.17-1.54.27-.75.27-1.4.19-1.54-.08-.14-.29-.22-.62-.38Z"/></svg>
+</a>
+<script>
+(function(){
+  var splash=document.getElementById('glossify-preloader');
+  if(!splash) return;
+  var hidden=false;
+  function hideSplash(){ if(hidden) return; hidden=true; setTimeout(function(){ splash.classList.add('is-hidden'); setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); },700); },850); }
+  if(document.readyState==='complete') hideSplash();
+  else window.addEventListener('load',hideSplash,{once:true});
+  setTimeout(hideSplash,5000);
+})();
+</script>
+
+<script>
+(function(){
+ const dropdown=document.querySelector('.nav-dropdown');
+ const toggle=document.querySelector('.nav-dropdown-toggle');
+ if(!dropdown||!toggle)return;
+ toggle.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();const open=dropdown.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});
+ document.addEventListener('click',function(e){if(!dropdown.contains(e.target)){dropdown.classList.remove('open');toggle.setAttribute('aria-expanded','false');}});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){dropdown.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.focus();}});
+})();
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('reveal-ready');
+  var items=document.querySelectorAll('.scroll-reveal');
+  if(!('IntersectionObserver' in window)){items.forEach(function(item){item.classList.add('is-visible')});return;}
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -35px 0px'});
+  items.forEach(function(item){observer.observe(item);});
+})();
+</script>
+
+<!-- Glossify premium website chatbot -->
+<style id="glossify-chatbot-styles">
+#glossify-chat-launcher{position:fixed;left:22px;bottom:94px;z-index:100000;display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:11px 17px 11px 11px;background:#d71920;color:#fff;font:600 14px/1.2 inherit;box-shadow:0 12px 35px rgba(0,0,0,.35);cursor:pointer;transition:transform .2s,box-shadow .2s}
+#glossify-chat-launcher:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(215,25,32,.35)}
+#glossify-chat-launcher .gc-launch-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:#d71920;font-size:21px}
+#glossify-chat-launcher .gc-live{width:7px;height:7px;background:#62e6a0;border-radius:50%;display:inline-block;margin-right:5px;box-shadow:0 0 0 3px rgba(98,230,160,.15)}
+#glossify-chat-panel{position:fixed;left:22px;top:18px;bottom:166px;width:min(430px,calc(100vw - 28px));height:auto;max-height:calc(100vh - 190px);min-height:440px;box-sizing:border-box;z-index:100001;display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:20px;background:#101114;color:#f7f7f7;box-shadow:0 24px 75px rgba(0,0,0,.48);font-family:Arial,Helvetica,sans-serif}
+#glossify-chat-panel.gc-open{display:flex;animation:gc-rise .2s ease-out}
+@keyframes gc-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.gc-head{padding:17px 17px 15px;background:linear-gradient(120deg,#b90f18,#e3232b);display:flex;align-items:center;gap:11px}
+.gc-avatar{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#fff;color:#c8141d;font-size:22px;font-weight:800;flex-shrink:0}
+.gc-head-copy{flex:1;min-width:0}.gc-head-copy strong{display:block;font-size:15px;letter-spacing:.2px}.gc-head-copy span{display:block;font-size:11px;opacity:.85;margin-top:4px}
+#gc-close{border:0;background:rgba(0,0,0,.16);color:#fff;border-radius:50%;width:32px;height:32px;font-size:20px;cursor:pointer}
+.gc-intro{padding:13px 15px 4px;color:#b9bbc3;font-size:12px;line-height:1.5}
+#gc-messages{flex:1;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.gc-msg{max-width:88%;padding:11px 12px;border-radius:14px;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.gc-msg.bot{align-self:flex-start;background:#202126;color:#f1f1f4;border-bottom-left-radius:4px}.gc-msg.user{align-self:flex-end;background:#d71920;color:#fff;border-bottom-right-radius:4px}
+.gc-quick{padding:3px 13px 10px;display:flex;gap:7px;flex-wrap:wrap}.gc-quick button{border:1px solid #383940;background:#18191e;color:#f1f1f1;border-radius:999px;padding:7px 10px;font-size:11px;cursor:pointer}.gc-quick button:hover{border-color:#e3232b;color:#fff}
+.gc-compose{display:flex;gap:8px;padding:11px;border-top:1px solid #2b2c32;background:#15161a}.gc-compose input{min-width:0;flex:1;border:1px solid #383940;border-radius:12px;background:#222329;color:#fff;padding:12px;font-size:13px;outline:none}.gc-compose input:focus{border-color:#e3232b}.gc-compose button{width:43px;flex-shrink:0;border:0;border-radius:12px;background:#d71920;color:#fff;font-size:18px;cursor:pointer}.gc-foot{text-align:center;font-size:10px;color:#777982;padding:0 10px 9px;background:#15161a}
+.gc-msg a{color:#ff777c;text-decoration:underline}
+@media(max-width:600px){#glossify-chat-launcher{left:14px;bottom:80px;padding:9px 13px 9px 9px}#glossify-chat-launcher .gc-launch-icon{width:35px;height:35px}#glossify-chat-panel{left:10px;bottom:145px;width:calc(100vw - 20px);height:min(560px,calc(100vh - 100px));border-radius:18px}}
+@media(prefers-reduced-motion:reduce){#glossify-chat-panel.gc-open{animation:none}#glossify-chat-launcher{transition:none}}
+</style>
+<button id="glossify-chat-launcher" type="button" aria-label="Open Glossify assistant" aria-expanded="false"><span class="gc-launch-icon">✦</span><span><span class="gc-live"></span>Ask Glossify <span aria-hidden="true">↗</span></span></button>
+<section id="glossify-chat-panel" role="dialog" aria-label="Glossify virtual assistant" aria-modal="false">
+ <header class="gc-head"><div class="gc-avatar">G</div><div class="gc-head-copy"><strong>Glossify Assistant</strong><span>Car care, made simple · Usually replies instantly</span></div><button id="gc-close" type="button" aria-label="Close chat">×</button></header>
+ <div class="gc-intro">Welcome to Glossify. Ask us about detailing services or booking your car's next refresh.</div>
+ <div id="gc-messages" aria-live="polite"><div class="gc-msg bot">Hi there! 👋 I'm the Glossify assistant. What can I help you with today?</div></div>
+ <div class="gc-quick"><button type="button" data-question="What services do you offer?">Our services</button><button type="button" data-question="Tell me about ceramic coating">Ceramic coating</button><button type="button" data-question="How can I book?">Book a service</button><button type="button" data-question="I want to talk to a person">Talk to a person</button></div>
+ <form class="gc-compose" id="gc-chat-form"><input id="gc-chat-input" type="text" placeholder="Type your question…" autocomplete="off" aria-label="Type your question" maxlength="500"><button type="submit" aria-label="Send message">➤</button></form><div class="gc-foot">Virtual assistant · For a confirmed quote, contact the Glossify team.</div>
+</section>
+<script id="glossify-chatbot-script">
+(function(){
+  // Mobile virtual keyboard support: size the chat to the visible viewport.
+  const gcPanel = document.getElementById('glossify-chat-panel');
+  const gcLauncher = document.getElementById('glossify-chat-launcher');
+  function gcFitVisibleViewport(){
+    if (!gcPanel || window.matchMedia('(min-width: 601px)').matches) return;
+    const vv = window.visualViewport;
+    const height = vv ? vv.height : window.innerHeight;
+    const offsetTop = vv ? vv.offsetTop : 0;
+    document.documentElement.style.setProperty('--gc-vh', Math.max(240, height) + 'px');
+    if (gcPanel.classList.contains('gc-open')) {
+      gcPanel.style.top = (Math.max(0, offsetTop) + 8) + 'px';
+      gcPanel.style.bottom = 'auto';
+      gcPanel.style.height = 'calc(var(--gc-vh, 100dvh) - 16px)';
+      gcPanel.style.maxHeight = 'calc(var(--gc-vh, 100dvh) - 16px)';
+      gcPanel.style.transform = 'none';
+    }
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', gcFitVisibleViewport);
+    window.visualViewport.addEventListener('scroll', gcFitVisibleViewport);
+  }
+  window.addEventListener('resize', gcFitVisibleViewport);
+  if (gcLauncher) gcLauncher.addEventListener('click', () => setTimeout(gcFitVisibleViewport, 50));
+  document.addEventListener('focusin', e => { if (e.target.matches('#glossify-chat-panel input, #glossify-chat-panel textarea')) setTimeout(gcFitVisibleViewport, 80); });
+})();
+(function(){
+ const launcher=document.getElementById('glossify-chat-launcher'),panel=document.getElementById('glossify-chat-panel'),close=document.getElementById('gc-close'),messages=document.getElementById('gc-messages'),form=document.getElementById('gc-chat-form'),input=document.getElementById('gc-chat-input');
+ if(!launcher||!panel||!messages||!form||!input)return;
+ const wa='https://wa.me/918448240495?text='+encodeURIComponent('Hi Glossify, I would like to know about your car detailing services.');
+ function open(){panel.classList.add('gc-open');launcher.setAttribute('aria-expanded','true');setTimeout(()=>input.focus(),80)}function shut(){panel.classList.remove('gc-open');launcher.setAttribute('aria-expanded','false');launcher.focus()}
+ launcher.addEventListener('click',()=>panel.classList.contains('gc-open')?shut():open());close.addEventListener('click',shut);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('gc-open'))shut()});
+ function add(text,who='bot',html=false){const el=document.createElement('div');el.className='gc-msg '+who;if(html)el.innerHTML=text;else el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight}
+ function reply(q){const s=q.toLowerCase();if(/service|offer|available|what do you do/.test(s))return 'We offer Foam Wash, Dry Cleaning, Rubbing & Polish, Ceramic Coating, Car Wash, Paint Protection Film (PPF), Glass Film and more. Tell me which service you are interested in and I’ll share a quick overview.';
+ if(/foam|wash|clean/.test(s))return 'Our Foam Wash helps lift everyday dirt before a careful exterior wash. Dry Cleaning focuses on the cabin and interior surfaces. The right option depends on your car’s condition.';
+ if(/dry clean|interior|seat|upholstery/.test(s))return 'Dry Cleaning is for a deeper refresh of your car’s interior, including suitable fabric and cabin surfaces. Exact treatment depends on the material and condition.';
+ if(/rubbing|polish|scratch|swirl|paint correction/.test(s))return 'Rubbing & Polish can help improve paint gloss and reduce the appearance of some light surface marks. Deep scratches may need a separate assessment.';
+ if(/ceramic|coating|protection|shine|gloss/.test(s))return 'Ceramic Coating adds a glossy, easier-to-maintain protective layer to suitable paintwork. Preparation and durability depend on the package and vehicle condition; the team can recommend the right option after inspection.';
+ if(/ppf|paint protection film/.test(s))return 'Paint Protection Film (PPF) is a transparent protective film designed to help guard selected painted panels against chips and light abrasion. Ask the team about coverage options.';
+ if(/glass film|window|tint/.test(s))return 'We can help with Glass Film enquiries. Film types, visibility and local compliance should be confirmed with the Glossify team before installation.';
+ if(/book|appointment|schedule|booking/.test(s))return 'You can start a booking from our website’s booking section. Choose your service and preferred date/time. <a href="index.html#booking" style="color:#ff777c">Go to booking section ↗</a> If that link does not open the form on this page, contact our team on WhatsApp.';
+ if(/price|cost|rate|charge|quote|how much/.test(s))return 'Pricing depends on your car type, size, condition and selected package. I don’t want to guess a price—please message the Glossify team for a quote tailored to your car.';
+ if(/person|human|contact|whatsapp|team|call|talk/.test(s))return 'Of course—message the Glossify team directly on WhatsApp and they can help with availability and a tailored quote. <a href="'+wa+'" target="_blank" rel="noopener noreferrer">Chat on WhatsApp ↗</a>';
+ if(/location|address|where|hours|timing|open/.test(s))return 'For the latest location, opening hours and appointment availability, please confirm directly with the Glossify team on WhatsApp so I don’t give you outdated details. <a href="'+wa+'" target="_blank" rel="noopener noreferrer">Contact Glossify ↗</a>';
+ if(/thank/.test(s))return 'You’re welcome! ✨ Anything else you’d like to know about keeping your car looking its best?';
+ return 'I can help with our services, ceramic coating, dry cleaning, rubbing & polish, bookings and pricing enquiries. Could you tell me a little more? For a personal quote, <a href="'+wa+'" target="_blank" rel="noopener noreferrer">chat with the Glossify team ↗</a>.';}
+ function send(q){q=q.trim();if(!q)return;add(q,'user');input.value='';setTimeout(()=>add(reply(q),'bot',true),180)}
+ form.addEventListener('submit',e=>{e.preventDefault();send(input.value)});panel.querySelectorAll('[data-question]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.question)));
+})();
+</script>
+<!-- End Glossify chatbot -->
+
+
+<script id="glossify-footer-interaction">
+(function(){
+ const footer=document.querySelector('.footer-signature');
+ if(!footer || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+ let frame=0, lastX=50, lastY=50;
+ footer.addEventListener('pointermove',function(event){
+  const rect=footer.getBoundingClientRect();
+  lastX=((event.clientX-rect.left)/rect.width)*100;
+  lastY=((event.clientY-rect.top)/rect.height)*100;
+  if(frame) return;
+  frame=requestAnimationFrame(function(){
+   footer.style.setProperty('--shine-x',lastX.toFixed(2)+'%');
+   footer.style.setProperty('--shine-y',lastY.toFixed(2)+'%');
+   frame=0;
+  });
+ },{passive:true});
+ footer.addEventListener('pointerleave',function(){
+  footer.style.setProperty('--shine-x','50%');
+  footer.style.setProperty('--shine-y','50%');
+ });
+})();
+</script>
+</body>
+</html>
