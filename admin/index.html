@@ -12,7 +12,7 @@
 <section class="panel hidden" id="customersPanel"><h2>Customer directory</h2><p class="muted">Registered customer accounts and booking totals.</p><div class="notice" id="customerNotice"></div><div class="table-wrap"><table><thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>Joined</th><th>Bookings</th></tr></thead><tbody id="customerRows"></tbody></table></div></section>
 </section></main>
 <script>
-const API_BASE=window.GLOSSIFY_API_BASE||'http://localhost:5000';let token=localStorage.getItem('glossifyAdminToken')||'',eventStream=null;const $=id=>document.getElementById(id);
+const API_BASE='https://glossify-full.onrender.com';let token=localStorage.getItem('glossifyAdminToken')||'',eventStream=null;const $=id=>document.getElementById(id);
 async function request(path,options={}){const r=await fetch(API_BASE+path,{...options,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(options.headers||{})}});const d=await r.json().catch(()=>({message:'Unexpected response'}));if(!r.ok)throw Error(d.message||'Request failed');return d}
 function logout(){if(eventStream)eventStream.close();eventStream=null;token='';localStorage.removeItem('glossifyAdminToken');$('dashboard').classList.add('hidden');$('login').classList.remove('hidden');$('liveState').innerHTML='Offline'}
 function showDashboard(){$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');refreshAll();connectLive()}
