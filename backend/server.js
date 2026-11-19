@@ -3,17 +3,23 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dns from 'node:dns';
 import cors from 'cors';
-import admin from "firebase-admin";
 import helmet from 'helmet';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
 
-admin.initializeApp({
-  credential: admin.credential.cert(
-    "/etc/secrets/firebase-service-account.json"
-  ),
+import fs from 'node:fs';
+import { initializeApp, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
+
+const serviceAccount = JSON.parse(
+  fs.readFileSync('/etc/secrets/firebase-service-account.json', 'utf8')
+);
+
+initializeApp({
+  credential: cert(serviceAccount)
 });
+
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const app = express();
@@ -85,7 +91,7 @@ app.post('/api/auth/signup', asyncRoute(async (req,res) => {
    let verifiedPhone;
 
    try {
-    const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
+    const decodedToken = await getAuth().verifyIdToken(firebaseIdToken)
     verifiedPhone = decodedToken.phone_number;
 
     if (!verifiedPhone) {
@@ -98,7 +104,7 @@ app.post('/api/auth/signup', asyncRoute(async (req,res) => {
       message: 'Invalid or expired phone verification.'
     });
   }
-  
+
   if (await User.exists({ email })) return res.status(409).json({ message: 'An account with this email already exists.' });
   const user = await User.create({ name, email, phone, passwordHash: await bcrypt.hash(password, 12) });
   res.status(201).json({ token: signToken(user), user: publicUser(user) });
