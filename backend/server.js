@@ -82,28 +82,28 @@ app.post('/api/auth/signup', asyncRoute(async (req,res) => {
   const firebaseIdToken = String(req.body.firebaseIdToken || '');
   if (name.length < 2 || name.length > 100 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 8) return res.status(400).json({ message: 'Enter a valid name/email and password of at least 8 characters.' });
 
-  if (!firebaseIdToken) {
-    return res.status(400).json({
-      message: 'Please verify your phone number with OTP first.'
-    });
-  }
+  // if (!firebaseIdToken) {
+  //   return res.status(400).json({
+  //     message: 'Please verify your phone number with OTP first.'
+  //   });
+  // }
 
-   let verifiedPhone;
+  //  let verifiedPhone;
 
-   try {
-    const decodedToken = await getAuth().verifyIdToken(firebaseIdToken)
-    verifiedPhone = decodedToken.phone_number;
+  //  try {
+  //   const decodedToken = await getAuth().verifyIdToken(firebaseIdToken)
+  //   verifiedPhone = decodedToken.phone_number;
 
-    if (!verifiedPhone) {
-      return res.status(400).json({
-        message: 'Phone number verification failed.'
-      });
-    }
-  } catch (error) {
-    return res.status(401).json({
-      message: 'Invalid or expired phone verification.'
-    });
-  }
+  //   if (!verifiedPhone) {
+  //     return res.status(400).json({
+  //       message: 'Phone number verification failed.'
+  //     });
+  //   }
+  // } catch (error) {
+  //   return res.status(401).json({
+  //     message: 'Invalid or expired phone verification.'
+  //   });
+  // }
 
   if (await User.exists({ email })) return res.status(409).json({ message: 'An account with this email already exists.' });
   const user = await User.create({ name, email, phone, passwordHash: await bcrypt.hash(password, 12) });
