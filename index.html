@@ -630,6 +630,31 @@ body.reveal-ready .scroll-reveal.is-visible{opacity:1;transform:translateY(0)}
    <label>Full name<input id="signupName" autocomplete="name" placeholder="Your full name" required></label>
    <label>Email address<input id="signupEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
    <label>Mobile number<input id="signupPhone" type="tel" autocomplete="tel" placeholder="Your contact number" maxlength="20" required></label>
+   <div class="otp-section">
+  <button type="button" id="sendOTPBtn" class="btn btn-red">
+    Send OTP
+  </button>
+
+  <label id="otpLabel" hidden>
+    Enter OTP
+    <input
+      id="signupOTP"
+      type="text"
+      inputmode="numeric"
+      autocomplete="one-time-code"
+      maxlength="6"
+      placeholder="Enter 6-digit OTP"
+    />
+  </label>
+
+  <button type="button" id="verifyOTPBtn" class="btn btn-red" hidden>
+    Verify OTP
+  </button>
+
+  <p id="otpStatus" role="status"></p>
+
+  <div id="recaptcha-container"></div>
+</div>
    <label>Password<input id="signupPassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required></label>
    <button class="btn btn-red auth-submit" type="submit">Create Account</button>
   </form>
@@ -915,7 +940,41 @@ document.getElementById('refreshMyBookings').addEventListener('click',loadMyBook
 document.getElementById('myBookingsNav').addEventListener('click',()=>{if(!getToken()){openAuth('login');return;}loadMyBookings();});
 document.getElementById('bookAnotherService').addEventListener('click',()=>document.querySelector('#booking').scrollIntoView({behavior:'smooth'}));
 
-signupForm.addEventListener('submit',async e=>{e.preventDefault();const account={name:document.getElementById('signupName').value.trim(),email:document.getElementById('signupEmail').value.trim().toLowerCase(),phone:document.getElementById('signupPhone').value.trim(),password:document.getElementById('signupPassword').value};authMsg('Creating your secure account…');try{const data=await api('/api/auth/signup',{method:'POST',body:JSON.stringify(account)});saveSession(data);closeAuth();refreshAuthButtons();prefillUser(data.user);loadMyBookings()}catch(err){authMsg(err.message)}});
+signupForm.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  // OTP verification mandatory
+  if (!window.glossifyFirebaseIdToken) {
+    authMsg('Please verify your mobile number with OTP first.');
+    return;
+  }
+
+  const account = {
+    name: document.getElementById('signupName').value.trim(),
+    email: document.getElementById('signupEmail').value.trim().toLowerCase(),
+    phone: document.getElementById('signupPhone').value.trim(),
+    password: document.getElementById('signupPassword').value,
+    firebaseIdToken: window.glossifyFirebaseIdToken
+  };
+
+  authMsg('Creating your secure account…');
+
+  try {
+    const data = await api('/api/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify(account)
+    });
+
+    saveSession(data);
+    closeAuth();
+    refreshAuthButtons();
+    prefillUser(data.user);
+    loadMyBookings();
+
+  } catch (err) {
+    authMsg(err.message);
+  }
+});
 loginForm.addEventListener('submit',async e=>{e.preventDefault();const credentials={email:document.getElementById('loginEmail').value.trim().toLowerCase(),password:document.getElementById('loginPassword').value};authMsg('Signing in…');try{const data=await api('/api/auth/login',{method:'POST',body:JSON.stringify(credentials)});if(data.user.role==='admin')throw new Error('Please use the Glossify Admin Dashboard to sign in.');saveSession(data);closeAuth();refreshAuthButtons();prefillUser(data.user);loadMyBookings()}catch(err){authMsg(err.message)}});
 document.getElementById('authClose').addEventListener('click',closeAuth);
 authOverlay.addEventListener('click',e=>{if(e.target===authOverlay)closeAuth()});
@@ -1102,6 +1161,135 @@ document.getElementById('bookingForm').addEventListener('submit',async e=>{e.pre
   footer.style.setProperty('--shine-y','50%');
  });
 })();
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+  import {
+    getAuth,
+    RecaptchaVerifier,
+    signInWithPhoneNumber
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArncmhi50o3QHiKEj4_gL4jFXjokLnMxg",
+    authDomain: "glossify-b2a44.firebaseapp.com",
+    projectId: "glossify-b2a44",
+    storageBucket: "glossify-b2a44.firebasestorage.app",
+    messagingSenderId: "1058052035100",
+    appId: "1:1058052035100:web:2972ef208378fed849c5d9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.glossifyFirebaseAuth = auth;
+  window.glossifyFirebaseIdToken = null;
+
+  let confirmationResult = null;
+  let recaptchaVerifier = null;
+
+  const phoneInput = document.getElementById("signupPhone");
+  const sendOTPBtn = document.getElementById("sendOTPBtn");
+  const verifyOTPBtn = document.getElementById("verifyOTPBtn");
+  const otpLabel = document.getElementById("otpLabel");
+  const otpInput = document.getElementById("signupOTP");
+  const otpStatus = document.getElementById("otpStatus");
+
+  function normalizePhone(phone) {
+    phone = phone.replace(/\s+/g, "").replace(/-/g, "");
+
+    if (/^\d{10}$/.test(phone)) {
+      return "+91" + phone;
+    }
+
+    if (/^\+91\d{10}$/.test(phone)) {
+      return phone;
+    }
+
+    throw new Error("Please enter a valid Indian mobile number.");
+  }
+
+  sendOTPBtn.addEventListener("click", async () => {
+    try {
+      const phone = normalizePhone(phoneInput.value);
+
+      otpStatus.textContent = "Sending OTP...";
+
+      if (!recaptchaVerifier) {
+        recaptchaVerifier = new RecaptchaVerifier(
+          auth,
+          "recaptcha-container",
+          {
+            size: "invisible"
+          }
+        );
+      }
+
+      confirmationResult = await signInWithPhoneNumber(
+        auth,
+        phone,
+        recaptchaVerifier
+      );
+
+      otpLabel.hidden = false;
+      verifyOTPBtn.hidden = false;
+
+      otpStatus.textContent = "OTP sent successfully!";
+    } catch (error) {
+      console.error(error);
+      otpStatus.textContent = error.message || "OTP could not be sent.";
+
+      if (recaptchaVerifier) {
+        recaptchaVerifier.clear();
+        recaptchaVerifier = null;
+      }
+    }
+  });
+
+  verifyOTPBtn.addEventListener("click", async () => {
+    try {
+      const otp = otpInput.value.trim();
+
+      if (otp.length !== 6) {
+        otpStatus.textContent = "Please enter the 6-digit OTP.";
+        return;
+      }
+
+      otpStatus.textContent = "Verifying OTP...";
+
+      const result = await confirmationResult.confirm(otp);
+
+      window.glossifyFirebaseIdToken = await result.user.getIdToken();
+
+      phoneInput.disabled = true;
+      sendOTPBtn.disabled = true;
+      verifyOTPBtn.disabled = true;
+
+      otpStatus.textContent = "Phone number verified successfully! ✓";
+
+    } catch (error) {
+      console.error(error);
+      otpStatus.textContent = "Invalid OTP. Please try again.";
+    }
+  });
+
+  phoneInput.addEventListener("input", () => {
+    window.glossifyFirebaseIdToken = null;
+    confirmationResult = null;
+
+    phoneInput.disabled = false;
+    sendOTPBtn.disabled = false;
+    verifyOTPBtn.disabled = false;
+
+    otpLabel.hidden = true;
+    verifyOTPBtn.hidden = true;
+    otpInput.value = "";
+
+    otpStatus.textContent = "";
+  });
+
 </script>
 </body>
 </html>

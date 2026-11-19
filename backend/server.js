@@ -3,11 +3,17 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dns from 'node:dns';
 import cors from 'cors';
+import admin from "firebase-admin";
 import helmet from 'helmet';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
 
+admin.initializeApp({
+  credential: admin.credential.cert(
+    "/etc/secrets/firebase-service-account.json"
+  ),
+});
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const app = express();
@@ -67,7 +73,32 @@ app.post('/api/auth/signup', asyncRoute(async (req,res) => {
   const email = String(req.body.email || '').trim().toLowerCase();
   const password = String(req.body.password || '');
   const phone = String(req.body.phone || '').trim();
+  const firebaseIdToken = String(req.body.firebaseIdToken || '');
   if (name.length < 2 || name.length > 100 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 8) return res.status(400).json({ message: 'Enter a valid name/email and password of at least 8 characters.' });
+
+  if (!firebaseIdToken) {
+    return res.status(400).json({
+      message: 'Please verify your phone number with OTP first.'
+    });
+  }
+
+   let verifiedPhone;
+
+   try {
+    const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
+    verifiedPhone = decodedToken.phone_number;
+
+    if (!verifiedPhone) {
+      return res.status(400).json({
+        message: 'Phone number verification failed.'
+      });
+    }
+  } catch (error) {
+    return res.status(401).json({
+      message: 'Invalid or expired phone verification.'
+    });
+  }
+  
   if (await User.exists({ email })) return res.status(409).json({ message: 'An account with this email already exists.' });
   const user = await User.create({ name, email, phone, passwordHash: await bcrypt.hash(password, 12) });
   res.status(201).json({ token: signToken(user), user: publicUser(user) });
