@@ -943,11 +943,11 @@ document.getElementById('bookAnotherService').addEventListener('click',()=>docum
 signupForm.addEventListener('submit', async e => {
   e.preventDefault();
 
-  // OTP verification mandatory
-  if (!window.glossifyFirebaseIdToken) {
-    authMsg('Please verify your mobile number with OTP first.');
-    return;
-  }
+  // // OTP verification mandatory
+  // if (!window.glossifyFirebaseIdToken) {
+  //   authMsg('Please verify your mobile number with OTP first.');
+  //   return;
+  // }
 
   const account = {
     name: document.getElementById('signupName').value.trim(),
